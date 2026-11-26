@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kate Leopard — мягкое похудение 🐾 | Raidopert</title>
 <meta name="description" content="Kate Leopard — милое приложение для мягкого похудения: вес с учётом цикла, шаги, дневник без калорий, пищевой портрет и марафоны. © Raidopert · raidopert.ru">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FF8FBF">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kate Leopard">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
@@ -1637,6 +1644,10 @@ document.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>toast('💗 '+visitCompliment(pause)),3400);
   setInterval(reminderTick,30000);
 });
+/* PWA: сервис-воркер — только на http(s), не на file:// */
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){
+  addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
 </script>
 </body>
 </html>
