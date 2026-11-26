@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kate Leopard — мягкое похудение 🐾 | Raidopert</title>
-<meta name="description" content="Kate Leopard — милое приложение для мягкого похудения: вес с учётом цикла, шаги, дневник без калорий и марафоны. © Raidopert · raidopert.ru">
+<meta name="description" content="Kate Leopard — милое приложение для мягкого похудения: вес с учётом цикла, шаги, дневник без калорий, пищевой портрет и марафоны. © Raidopert · raidopert.ru">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
@@ -280,7 +280,7 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
         </div>
         <p id="res7700" class="note" style="margin-top:10px"></p>
       </div>
-      <p class="foot">Kate Leopard v0.3 · © 2026 Raidopert · raidopert.ru</p>
+      <p class="foot">Kate Leopard v0.4 · © 2026 Raidopert · raidopert.ru</p>
     </section>
 
     <!-- ДНЕВНИК -->
@@ -342,7 +342,7 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
     <!-- СТАТИСТИКА -->
     <section id="tab-stats" hidden>
       <div id="statsBody"></div>
-      <p class="foot">Kate Leopard v0.3 · © 2026 Raidopert · raidopert.ru</p>
+      <p class="foot">Kate Leopard v0.4 · © 2026 Raidopert · raidopert.ru</p>
     </section>
   </main>
   <nav id="tabs">
@@ -357,13 +357,14 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
 <div id="modal-root"></div>
 <script>
 'use strict';
-/* ================= Kate Leopard v0.1 · © Raidopert · raidopert.ru ================= */
+/* ================= Kate Leopard v0.4 · © Raidopert · raidopert.ru ================= */
 const LSKEY='kateLeopard_v1';
 const DEFAULTS={onboarded:false,name:'',cycleLen:28,lastPeriod:'',goal:'',goalSteps:6000,
   weights:[],steps:{},diary:[],walks:0,marathon:{active:null,started:'',checkins:[]},
   zodiac:'',zcustom:'',favColor:'#FF8FBF',moods:[],calc:{age:'',height:'',act:1.375},visits:0,lastVisit:'',
   water:{},sleep:{},cravings:[],paws:0,goalWater:8,goalSleep:8,pace:'0.5',
-  reminder:{on:false,time:'20:00',last:''}};
+  reminder:{on:false,time:'20:00',last:''},
+  bodyType:'',habits:[],harmTop:[],goodTop:[]};
 function loadData(){
   try{const raw=localStorage.getItem(LSKEY);
     if(raw){const p=JSON.parse(raw);
@@ -732,6 +733,8 @@ Kate Leopard™ и Raidopert™ — торговые марки Raidopert.
 Полный текст лицензии: файл LICENSE.txt в репозитории проекта.`;
 function openSettings(){
   window._zodSel=data.zodiac||'';window._colSel=data.favColor||'#FF8FBF';
+  window._bodySel=data.bodyType||'';window._habSel=(data.habits||[]).slice();
+  window._harmList=(data.harmTop||[]).slice();window._goodList=(data.goodTop||[]).slice();
   const lenOpts=Array.from({length:20},(_,i)=>i+21).map(n=>
     `<option ${n===data.cycleLen?'selected':''} value="${n}">${n} дней</option>`).join('');
   modal(`<div class="mhead">Профиль 🐾</div>
@@ -773,6 +776,17 @@ function openSettings(){
       </select></div>
       <div><label class="lbl">Время напоминания</label><input id="pfRemTime" class="inp" type="time" value="${data.reminder.time}"></div>
     </div>
+    <div class="mhead" style="font-size:16px;margin-top:18px">🍽 Пищевой портрет</div>
+    <p class="note">Подсказки, замены и «Хочу съесть» подстраиваются под этот портрет.</p>
+    <label class="lbl">Тип фигуры (для тёплых подсказок)</label>
+    <div id="pfBodyBox"></div>
+    <div id="pfBodyTip" class="aib" style="display:none"></div>
+    <label class="lbl">Пищевые привычки</label>
+    <div id="pfHabBox"></div>
+    <label class="lbl">Топ вредных желаний (до 6) — первыми в «Хочу съесть»</label>
+    <div id="pfHarmBox"></div>
+    <label class="lbl">Полезные любимчики (до 6) — предлагаются как замены</label>
+    <div id="pfGoodBox"></div>
     <button class="pillow small ghost wide" style="margin-top:10px" onclick="testPush()">Проверить уведомления 🔔</button>
     <div class="smallnote">Пока страница открыта — напомним в назначенное время, если дневник ещё пуст. В мобильном приложении будут настоящие push, даже когда всё закрыто.</div>
     <button class="pillow wide" style="margin-top:16px" onclick="saveProfile()">Сохранить 🐾</button>
@@ -782,6 +796,9 @@ function openSettings(){
     <button class="skip" onclick="resetData()">сбросить все данные</button>`);
   renderZodChips('zodBox',window._zodSel);
   renderSwatches('colBox',window._colSel);
+  renderBodyChips('pfBodyBox',window._bodySel);
+  renderHabitChips('pfHabBox');
+  renderPortLists();
 }
 function saveProfile(){
   data.name=$('pfName').value.trim()||'лапочка';
@@ -789,6 +806,10 @@ function saveProfile(){
   if(data.zodiac==='custom'){const c=$('zodBoxCustom');data.zcustom=(c&&c.value.trim())||'Свой знак';}
   data.favColor=window._colSel||'#FF8FBF';
   applyTheme(data.favColor);
+  data.bodyType=window._bodySel||'';
+  data.habits=(window._habSel||[]).slice();
+  data.harmTop=window._harmList.slice();
+  data.goodTop=window._goodList.slice();
   data.cycleLen=parseInt($('pfLen').value,10)||28;
   const g=parseFloat($('pfGoal').value);
   data.goal=(g&&g>30&&g<250)?g:'';
@@ -813,12 +834,101 @@ function resetData(){
 }
 function doReset(){localStorage.removeItem(LSKEY);location.reload();}
 
+/* ================= v0.4: пищевой портрет ================= */
+const BODYTYPES=[
+  {id:'apple',e:'🍎',n:'Яблоко',tip:'Запасы любят талию, в том числе внутренний жир — а он первым уходит при дефиците и ходьбе. Сон и поменьше сахара — твои лучшие друзья.'},
+  {id:'pear',e:'🍐',n:'Груша',tip:'Бёдра держат запасы крепче всего — это генетика, а не слабость воли. Упражнения с весом тела и терпение: низ подтянется следом.'},
+  {id:'hourglass',e:'⏳',n:'Песочные часы',tip:'Жир распределяется и уходит равномерно — просто держи мягкий темп, и пропорции сохранятся.'},
+  {id:'rect',e:'📐',n:'Прямоугольник',tip:'Талия от природы скромная — точечно её не «похудеть», зато мышцы рисуют силуэт: приседания и планка делают своё.'},
+  {id:'inverted',e:'🔺',n:'Перевёрнутый треугольник',tip:'Широкие плечи — достоинство, оно останется с тобой. Худей мягко и равномерно: силуэт будет только интереснее.'},
+  {id:'secret',e:'🤫',n:'Не хочу указывать',tip:'И отлично: тип фигуры здесь — только для тёплых подсказок, а цифры тренда важнее всяких силуэтов 🐾'}];
+const HABITS=[
+  {id:'sweets',e:'🍫',n:'тяга к сладкому и выпечке'},
+  {id:'salty',e:'🍟',n:'солёненькое, чипсы'},
+  {id:'fastfood',e:'🍔',n:'фастфуд-дни'},
+  {id:'night',e:'🌙',n:'ночные набеги на холодильник'},
+  {id:'emotions',e:'😿',n:'заедаю стресс или скуку'},
+  {id:'portions',e:'🍽',n:'большие порции'},
+  {id:'veg',e:'🥗',n:'мало овощей и зелени'},
+  {id:'soda',e:'🥤',n:'сладкие напитки'},
+  {id:'skipmeals',e:'⏰',n:'пропускаю приёмы пищи'},
+  {id:'fast',e:'⚡️',n:'ем быстро, на бегу'}];
+const HABIT_TIPS={
+  sweets:'Сладкое побеждается не запретом, а заменой из твоего полезного списка: ягоды, печёное яблоко, какао без сахара. В ПМС тяга усиливается — это гормоны, а не характер.',
+  salty:'Солёненькое держит воду: чипсы могут дать +1–1,5 кг на весах, которые уйдут за пару дней. Попкорн без масла и огуречные чипсы — честная замена.',
+  fastfood:'Фастфуд не запрещаем: курица гриль вместо двойного сыра и большой салат вприкуску — та же радость, заметно меньше ккал.',
+  night:'Ночные набеги лечатся днём: ужин с белком и ранний сон работают лучше силы воли. Чистка зубов в 21:30 закрывает кухню 🐾',
+  emotions:'Заедание стресса — нормальная защита, а не преступление. Пауза: вода, 10 минут, позвонить подруге — еда нужна реже, чем кажется.',
+  portions:'Меньше тарелка — меньше порция: работает без подсчёта граммов. «Половинку» в «Хочу съесть» — тоже честный ответ.',
+  veg:'Овощи — объём почти без ккал: половина тарелки по правилу тарелки. Замороженные тоже считаются — и они даже дешевле.',
+  soda:'Сладкие напитки — самые незаметные ккал: сытости ноль. Кола без сахара или вода с лимоном — и −200–300 ккал в день сами.',
+  skipmeals:'Пропущенный обед возвращается ночным жором. Ешь регулярно — пусть «Пора поесть» станет якорем дня.',
+  fast:'Сигнал о сытости доходит до мозга 15–20 минут. Вилка на столе между укусами — и наедаешься меньшим.'};
+function bodyInfo(){return BODYTYPES.find(b=>b.id===data.bodyType)||null;}
+function renderBodyChips(id,cur){
+  const box=$(id);if(!box)return;
+  box.innerHTML='<div class="zgrid">'+BODYTYPES.map(b=>
+    `<span class="zodchip ${cur===b.id?'sel':''}" onclick="pickBody('${b.id}','${id}')">${b.e} ${b.n}</span>`).join('')+'</div>';
+}
+function pickBody(v,id){
+  window._bodySel=v;renderBodyChips(id,v);
+  const tip=$(id.replace(/Box$/,'')+'Tip');
+  if(tip){const b=BODYTYPES.find(x=>x.id===v);
+    if(b){tip.textContent=b.tip;tip.style.display='block';}else tip.style.display='none';}
+}
+function renderHabitChips(id){
+  const box=$(id);if(!box)return;
+  box.innerHTML='<div class="zgrid">'+HABITS.map(h=>
+    `<span class="zodchip ${(window._habSel||[]).includes(h.id)?'sel':''}" onclick="toggleHabit('${h.id}','${id}')">${h.e} ${h.n}</span>`).join('')+'</div>';
+}
+function toggleHabit(idv,id){
+  const arr=window._habSel||[];
+  const i=arr.indexOf(idv);
+  if(i>=0)arr.splice(i,1);else arr.push(idv);
+  window._habSel=arr;renderHabitChips(id);
+}
+function portItemChips(list,delFn){
+  if(!list.length)return'<div class="smallnote">пока пусто — добавь пару пунктов ниже 🐾</div>';
+  return'<div class="zgrid">'+list.map((x,i)=>
+    `<span class="zodchip">${esc(x.n)}${x.kcal?' · ~'+x.kcal+' ккал':''} <b style="cursor:pointer;color:var(--pink-deep)" onclick="${delFn}(${i})">✕</b></span>`).join('')+'</div>';
+}
+function renderPortLists(){
+  [['ob','obHarmName','obHarmKcal','obGoodName','obGoodKcal'],
+   ['pf','pfHarmName','pfHarmKcal','pfGoodName','pfGoodKcal']].forEach(([p,hn,hk,gn,gk])=>{
+    const hb=$(p+'HarmBox'),gb=$(p+'GoodBox');
+    if(!hb&&!gb)return;
+    if(hb)hb.innerHTML=portItemChips(window._harmList,`portDel('${p}','harm')`)+
+      `<div class="wrow" style="margin-top:8px"><input id="${hn}" class="inp" placeholder="Например: чипсы со сметаной">
+        <input id="${hk}" class="inp" type="number" inputmode="numeric" style="max-width:96px" placeholder="ккал">
+        <button class="pillow small" onclick="portAdd('${p}','harm')">+</button></div>`;
+    if(gb)gb.innerHTML=portItemChips(window._goodList,`portDel('${p}','good')`)+
+      `<div class="wrow" style="margin-top:8px"><input id="${gn}" class="inp" placeholder="Например: творог с ягодами">
+        <input id="${gk}" class="inp" type="number" inputmode="numeric" style="max-width:96px" placeholder="ккал">
+        <button class="pillow small" onclick="portAdd('${p}','good')">+</button></div>`;
+  });
+}
+function portAdd(p,kind){
+  const list=kind==='harm'?window._harmList:window._goodList;
+  if(list.length>=6){toast('Шесть пунктов — уже целый топ, хватит 🐾');return;}
+  const name=$(p+(kind==='harm'?'Harm':'Good')+'Name').value.trim();
+  if(!name){toast('Напиши название блюда 🐾');return;}
+  const k=parseInt($(p+(kind==='harm'?'Harm':'Good')+'Kcal').value,10);
+  list.push({n:name.slice(0,40),kcal:(k&&k>=10&&k<=2000)?k:(kind==='harm'?400:150)});
+  $(p+(kind==='harm'?'Harm':'Good')+'Name').value='';
+  $(p+(kind==='harm'?'Harm':'Good')+'Kcal').value='';
+  renderPortLists();
+}
+function portDel(p,kind,i){
+  const list=kind==='harm'?window._harmList:window._goodList;
+  list.splice(i,1);renderPortLists();
+}
+
 /* ================= онбординг ================= */
 function openOnboarding(){
   window._zodSel=data.zodiac||'';window._colSel=data.favColor||'#FF8FBF';
   const lenOpts=Array.from({length:20},(_,i)=>i+21).map(n=>
     `<option ${n===data.cycleLen?'selected':''} value="${n}">${n} дней</option>`).join('');
-  modal(`<div class="mhead">Знакомство 🐾</div>
+  modal(`<div class="mhead">Знакомство 🐾 · шаг 1 из 2</div>
     <p class="note">Данные живут только на твоём телефоне. Никаких почт и паролей — только ты и котик 💗</p>
     <label class="lbl">Как тебя звать? (можно псевдоним)</label>
     <input id="obName" class="inp" placeholder="лапочка" value="${esc(data.name)}">
@@ -832,24 +942,49 @@ function openOnboarding(){
     <input id="obPeriod" class="inp" type="date" value="${data.lastPeriod}">
     <label class="lbl">Цель по весу, кг (необязательно)</label>
     <input id="obGoal" class="inp" type="number" step="0.1" inputmode="decimal" placeholder="например, 58" value="${data.goal}">
-    <button class="pillow wide" style="margin-top:16px" onclick="saveOnboarding()">Мы готовы! 🐾</button>
+    <button class="pillow wide" style="margin-top:16px" onclick="obStep2()">Дальше — пищевой портрет 🍽</button>
     <button class="skip" onclick="saveOnboarding(true)">Позже</button>`);
   renderZodChips('zodBox',window._zodSel);
   renderSwatches('colBox',window._colSel);
 }
+function obStep1(){
+  data.name=$('obName').value.trim()||'лапочка';
+  data.zodiac=window._zodSel||'';
+  if(data.zodiac==='custom'){const c=$('zodBoxCustom');data.zcustom=(c&&c.value.trim())||'Свой знак';}
+  data.favColor=window._colSel||'#FF8FBF';
+  applyTheme(data.favColor);
+  data.cycleLen=parseInt($('obLen').value,10)||28;
+  const p=$('obPeriod').value;
+  if(p&&diffDays(p,today())>=0)data.lastPeriod=p;
+  const g=parseFloat($('obGoal').value);
+  data.goal=(g&&g>30&&g<250)?g:'';
+}
+function obStep2(){
+  obStep1();
+  window._bodySel=data.bodyType||'';
+  window._habSel=(data.habits||[]).slice();
+  window._harmList=(data.harmTop||[]).slice();
+  window._goodList=(data.goodTop||[]).slice();
+  modal(`<div class="mhead">Пищевой портрет 🍽 · 2/2</div>
+    <p class="note">Это не экзамен, а настройка: подсказки, замены и «Хочу съесть» станут именно твоими. Всё можно изменить в профиле.</p>
+    <label class="lbl">Тип фигуры — для тёплых подсказок. Точечно похудеть нельзя (это генетика), но знать особенности полезно</label>
+    <div id="obBodyBox"></div>
+    <div id="obBodyTip" class="aib" style="display:none"></div>
+    <label class="lbl">Твои пищевые привычки — отметь что угодно, честность здесь валюта</label>
+    <div id="obHabBox"></div>
+    <label class="lbl">Топ вредных желаний (до 6) — они будут первыми в «Хочу съесть»</label>
+    <div id="obHarmBox"></div>
+    <label class="lbl">Полезные любимчики (до 6) — станут предлагаться как замены</label>
+    <div id="obGoodBox"></div>
+    <button class="pillow wide" style="margin-top:16px" onclick="saveOnboarding(false)">Мы готовы! 🐾</button>
+    <button class="skip" onclick="saveOnboarding(true)">Позже</button>`);
+  renderBodyChips('obBodyBox',window._bodySel);
+  renderHabitChips('obHabBox');
+  renderPortLists();
+}
 function saveOnboarding(skip){
-  if(!skip){
-    data.name=$('obName').value.trim()||'лапочка';
-    data.zodiac=window._zodSel||'';
-    if(data.zodiac==='custom'){const c=$('zodBoxCustom');data.zcustom=(c&&c.value.trim())||'Свой знак';}
-    data.favColor=window._colSel||'#FF8FBF';
-    applyTheme(data.favColor);
-    data.cycleLen=parseInt($('obLen').value,10)||28;
-    const p=$('obPeriod').value;
-    if(p&&diffDays(p,today())>=0)data.lastPeriod=p;
-    const g=parseFloat($('obGoal').value);
-    data.goal=(g&&g>30&&g<250)?g:'';
-  }
+  if(!skip){data.bodyType=window._bodySel||'';data.habits=(window._habSel||[]).slice();
+    data.harmTop=window._harmList.slice();data.goodTop=window._goodList.slice();}
   data.onboarded=true;save();closeModal();renderHome();
   if(!skip)toast(`Мур-р, ${data.name}! Всё готово 🐾`);
 }
@@ -1100,6 +1235,10 @@ function renderStats(){
   const sKeys=Object.keys(data.sleep).filter(d=>{const dd=diffDays(d,t);return dd>=0&&dd<7;});
   const sAvg=sKeys.length?(sKeys.reduce((a,k)=>a+data.sleep[k],0)/sKeys.length):null;
   const pn=v=>String(v).replace('.',',');
+  const bt=bodyInfo();
+  const hab=(data.habits||[]).map(id=>HABITS.find(x=>x.id===id)).filter(Boolean);
+  const perTips=(data.habits||[]).filter(id=>HABIT_TIPS[id]).map(id=>HABIT_TIPS[id]).slice(0,3);
+  const portraitFilled=!!(bt||hab.length||(data.harmTop||[]).length||(data.goodTop||[]).length);
   el.innerHTML=`
   <div class="card">
     <h3>📊 Главные цифры</h3>
@@ -1180,6 +1319,19 @@ function renderStats(){
       <div class="st"><b>≈ −${pn((saved7/7700).toFixed(2))} кг</b><span>та же польза в кг (формула 7700)</span></div>
     </div>
     <div class="smallnote">Здоровая замена +2 🐾, половинка и «вода-подожди» +1 🐾, осознанное «да» — без лапок, но с гордостью 💗 Таких было: ${honest7} за неделю.</div>
+  </div>
+  <div class="card">
+    <h3>🍽 Пищевой портрет</h3>
+    ${portraitFilled?`
+      ${bt?`<p class="note"><b>${bt.e} ${bt.n}</b> — ${bt.tip}</p>`
+        :'<p class="note">Тип фигуры не указан: укажи его — или честно выбери «не хочу указывать» 🐾</p>'}
+      ${hab.length?`<div style="margin-top:4px">${hab.map(x=>`<span class="chip">${x.e} ${x.n}</span>`).join('')}</div>`:''}
+      ${(data.harmTop||[]).length?`<p class="note" style="margin-top:8px"><b>Твои вредные желания</b> (они первыми в «Хочу съесть»): ${data.harmTop.map(x=>esc(x.n)).join(' · ')}</p>`:''}
+      ${(data.goodTop||[]).length?`<p class="note"><b>Полезные любимчики</b> (предлагаются как замены): ${data.goodTop.map(x=>esc(x.n)).join(' · ')}</p>`:''}
+      ${perTips.map(tp=>`<div class="aib">${tp}</div>`).join('')}
+      <button class="pillow small ghost" style="margin-top:10px" onclick="openSettings()">Изменить портрет 🐾</button>`
+    :`<p class="note">Расскажи про тип фигуры, привычки и любимые блюда — и советы, замены и «Хочу съесть» станут твоими, а не средними по больнице.</p>
+      <button class="pillow small" onclick="openSettings()">Заполнить портрет 🍽</button>`}
   </div>
   <div class="card">
     <h3>💧 Вода и сон</h3>
@@ -1272,35 +1424,62 @@ function renderCraving(){
   const p=data.paws||0,last=data.cravings[0];
   const t=today(),c7=data.cravings.filter(c=>{const dd=diffDays(c.d,t);return dd>=0&&dd<7;});
   const s7=c7.reduce((a,c)=>a+(c.saved||0),0);
+  const mine=(data.harmTop||[]).length;
   el.innerHTML=`<h3>🍩 Хочу съесть…</h3>
     <p class="note">Сказать желанию «нельзя» — худший план. Выбери честно: замену, половинку или «осознанно да» — котик посчитает пользу и даст лапки 🐾</p>
     <div class="chip">🐾 Лапки мудрости: ${p}</div>${s7>0?`<div class="chip">сохранено за неделю: ≈ ${s7.toLocaleString('ru-RU')} ккал</div>`:''}
+    ${mine?`<div class="chip">твоих желаний в списке: ${mine}</div>`:''}
     ${last?`<div class="smallnote" style="margin-top:8px">Последний выбор: ${esc(last.it)} → ${esc(last.choice)}${last.saved>0?' (−'+last.saved+' ккал)':''}</div>`:''}
     <button class="pillow" style="margin-top:10px" onclick="openCraving()">Выбрать желание 🍩</button>`;
 }
-function openCraving(){crState={item:null};cravingStep1();}
+function openCraving(){crState={item:null,swaps:[]};cravingStep1();}
 function cravingStep1(){
+  const mine=data.harmTop||[];
   modal(`<div class="mhead">Я хочу съесть… 🍩</div>
     <p class="note">Честно и без вины: выбери желание — и котик покажет варианты с их пользой 🐾</p>
+    ${mine.length?`<label class="lbl">Твои желания — из пищевого портрета</label>
+    <div class="stgrid">${mine.map((c,i)=>`<div class="stk" onclick="cravingPickPersonal(${i})"><span class="se">🍽</span>${esc(c.n)}</div>`).join('')}</div>
+    <label class="lbl">Обычные желания</label>`:''}
     <div class="stgrid">${CRAVINGS.map(c=>`<div class="stk" onclick="cravingPick('${c.id}')"><span class="se">${c.e}</span>${c.n}</div>`).join('')}</div>
     <label class="lbl">Своё желание</label>
     <div class="wrow"><input id="crCustom" class="inp" placeholder="Например: бабушкин пирожок"><button class="pillow" onclick="cravingPickCustom()">Дальше</button></div>
     <button class="skip" onclick="closeModal()">Позже</button>`);
 }
-function cravingPick(id){crState.item=CRAVINGS.find(c=>c.id===id);cravingStep2();}
+function cravingPick(id){crState.item=CRAVINGS.find(c=>c.id===id);crState.swaps=crState.item.swaps;cravingStep2();}
+function cravingPickPersonal(i){
+  const x=data.harmTop[i];
+  crState.item={e:'🍽',n:x.n,kcal:x.kcal||400,personal:true};
+  crState.swaps=(data.goodTop||[]).map(g=>({e:'💗',t:g.n+' — из твоего полезного списка',kcal:g.kcal||150,mine:true}));
+  cravingStep2();
+}
 function cravingPickCustom(){
   const v=$('crCustom').value.trim();
   if(!v){toast('Напиши, чего хочется 🐾');return;}
   crState.item={e:'🍩',n:v,kcal:400,custom:true};
+  crState.swaps=(data.goodTop||[]).map(g=>({e:'💗',t:g.n+' — из твоего полезного списка',kcal:g.kcal||150,mine:true}));
   cravingStep2();
+}
+function cravingHint(it){
+  const h=data.habits||[],hour=new Date().getHours(),ph=phaseInfo();
+  if(hour>=21&&h.includes('night'))return'Ночь за окном — это привычка, а не голод. Чай без сахара и почистить зубы: желание обычно уходит само 🐾';
+  if(ph&&ph.t==='ПМС — зона воды'&&h.includes('sweets'))return'ПМС тянет на сладенькое — это гормоны, а не слабость. Ягоды или какао честно закрывают вопрос.';
+  if(ph&&ph.t==='Овуляция'&&h.includes('sweets'))return'В овуляцию тяга к сладкому усиливают гормоны. Половинка или ягоды — и всё под контролем.';
+  if(h.includes('emotions'))return'Если это эмоции, а не желудок: вода, 10 минут и плед часто работают лучше тортика. А если нет — съешь осознанно, без вины 💗';
+  if(h.includes('skipmeals')&&(hour<11||hour>=17))return'Пропущенный приём пищи делает желания громче. Полноценная еда вовремя — и тяга стихает сама.';
+  return'';
 }
 function cravingStep2(){
   const it=crState.item;
-  const swapRows=it.custom?[]:it.swaps;
-  modal(`<div class="mhead">${it.e} ${esc(it.n)} <span style="font-size:13px;color:var(--ink-soft)">~${it.kcal} ккал${it.custom?' (оценка)':''}</span></div>
+  const rows=crState.swaps||[];
+  const hint=cravingHint(it);
+  const goodNote=(it.personal||it.custom)&&!(data.goodTop||[]).length?
+    '<div class="smallnote">💡 Добавь 2–3 полезных любимчика в профиль — и я буду предлагать их здесь как замены.</div>':'';
+  modal(`<div class="mhead">${it.e} ${esc(it.n)} <span style="font-size:13px;color:var(--ink-soft)">~${it.kcal} ккал${it.custom||it.personal?' (оценка)':''}</span></div>
     <p class="note">Выбирай, что сделаешь на самом деле. Здесь нет неверных ответов — есть разная польза 🐾</p>
-    ${swapRows.map((s,i)=>`<div class="mcard"><div><h4>${s.e} ${esc(s.t)}</h4><div class="md">≈ ${s.kcal} ккал · сохранишь ≈ <b>${it.kcal-s.kcal} ккал</b> · +2 🐾</div></div>
+    ${hint?`<div class="aib">${hint}</div>`:''}
+    ${rows.map((s,i)=>`<div class="mcard"><div><h4>${s.e} ${esc(s.t)}</h4><div class="md">≈ ${s.kcal} ккал · сохранишь ≈ <b>${Math.max(0,it.kcal-s.kcal)} ккал</b> · +2 🐾</div></div>
       <button class="pillow small" onclick="cravingChoice('swap',${i})">Так и сделаю</button></div>`).join('')}
+    ${goodNote}
     <div class="mcard"><div><h4>✌️ Половинку</h4><div class="md">≈ ${Math.round(it.kcal/2)} ккал · сохранишь ≈ <b>${Math.round(it.kcal/2)} ккал</b> · +1 🐾</div></div>
       <button class="pillow small" onclick="cravingChoice('half',0)">Так и сделаю</button></div>
     <div class="mcard"><div><h4>💧 Вода и 10 минут</h4><div class="md">Часто «хочу есть» — это жажда. Передумаешь — не потеряешь ничего, кроме желания</div></div>
@@ -1312,7 +1491,8 @@ function cravingStep2(){
 function cravingChoice(kind,i){
   const it=crState.item;if(!it)return;
   let label,saved,paws,ai;
-  if(kind==='swap'){const s=it.swaps[i];label=s.t;saved=it.kcal-s.kcal;paws=2;ai='Мирный договор с желанием: все довольны 🐾';}
+  if(kind==='swap'){const s=(crState.swaps||[])[i];label=s.t;saved=Math.max(0,it.kcal-s.kcal);paws=2;
+    ai=s.mine?'Замена из твоего полезного списка — стратегия вкуса и ума 🐾':'Мирный договор с желанием: все довольны 🐾';}
   else if(kind==='half'){label='Половинка';saved=Math.round(it.kcal/2);paws=1;ai='Половинка — это математика и свобода одновременно 💗';}
   else if(kind==='water'){label='Вода и 10 минут';saved=0;paws=1;ai='Храброе решение: вода часто глушит желание 🐾';}
   else{label='Осознанно съела';saved=0;paws=0;ai='Осознанность — тоже победа. Котик гордится тобой не меньше 💗';}
