@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kate Leopard — мягкое похудение 🐾 | Raidopert</title>
+<meta name="description" content="Kate Leopard — милое приложение для мягкого похудения: вес с учётом цикла, шаги, дневник без калорий и марафоны. © Raidopert · raidopert.ru">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Nunito:wght@400;600;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFF3F7; --card:#FFF9FB; --pink:#FF8FBF; --pink-deep:#EF6FA5; --pink-soft:#FFD3E4;
+  --pink-line:#F7BBD3; --gold:#E9B94C; --gold-deep:#C9922E; --caramel:#A8683F;
+  --ink:#5B3648; --ink-soft:#93687C; --water:#A9D6F0;
+  --shadow:0 10px 24px rgba(238,120,168,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
+  background-color:#FBE9F1;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cg fill='none' stroke='%23C98A6B' stroke-width='4' stroke-linecap='round' opacity='.26'%3E%3Cpath d='M22 34a16 16 0 1 1 10 13'/%3E%3Cpath d='M86 108a14 14 0 1 0 12 8'/%3E%3Cpath d='M112 26a12 12 0 1 1 7 10'/%3E%3C/g%3E%3Cg fill='%23A8683F' opacity='.2'%3E%3Ccircle cx='72' cy='44' r='4'/%3E%3Ccircle cx='34' cy='112' r='3.5'/%3E%3Ccircle cx='124' cy='76' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  display:flex;justify-content:center;min-height:100vh;
+}
+#frame{width:100%;max-width:480px;min-height:100vh;background:linear-gradient(180deg,#FFF6FA 0%,#FFEAF2 100%);
+  box-shadow:0 0 60px rgba(238,120,168,.25);display:flex;flex-direction:column;position:relative;overflow:hidden}
+/* ---------- шапка ---------- */
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 6px;position:relative}
+.greet{font-family:'Comfortaa',cursive;font-weight:700;font-size:clamp(18px,5vw,22px);color:var(--pink-deep)}
+.dateline{font-size:13px;color:var(--ink-soft);margin-top:2px}
+.gear{border:none;background:#fff;border-radius:18px;width:42px;height:42px;font-size:19px;cursor:pointer;
+  box-shadow:var(--shadow);transition:transform .15s}
+.gear:active{transform:scale(.92)}
+/* ---------- карточки ---------- */
+main{flex:1;padding:14px 16px 118px}
+.card{background:var(--card);border-radius:26px;padding:18px;box-shadow:var(--shadow);
+  border:1.5px solid #FFE0EC;margin-bottom:16px;position:relative;overflow:hidden}
+.card h3{font-family:'Comfortaa',cursive;font-size:16.5px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.note{font-size:13.5px;color:var(--ink-soft);line-height:1.45;margin-bottom:10px}
+.hand{font-family:'Caveat',cursive;font-size:21px;line-height:1.25;color:var(--pink-deep);margin-top:8px}
+.hint{font-size:13.5px;color:var(--ink-soft);text-align:center;padding:14px 6px}
+.foot{text-align:center;font-size:11.5px;color:var(--ink-soft);opacity:.75;margin:4px 0 8px}
+.wrow{display:flex;gap:10px;align-items:stretch;margin-top:6px}
+.wrow.center{justify-content:center}
+.wrow>*:first-child{flex:1}
+.inp{width:100%;padding:12px 16px;border-radius:20px;border:2px solid var(--pink-line);background:#fff;
+  font:inherit;color:var(--ink);outline:none;transition:border-color .15s}
+.inp:focus{border-color:var(--pink)}
+select.inp{appearance:none}
+textarea.inp{resize:vertical;min-height:52px;margin-top:10px}
+.lbl{display:block;font-size:13px;font-weight:800;color:var(--ink-soft);margin:12px 0 5px}
+/* ---------- кнопки-подушки ---------- */
+.pillow{
+  border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:#7A2F52;
+  background:linear-gradient(180deg,#FFC9DF 0%,#FFA8CB 55%,#F98CBC 100%);
+  border-radius:28px;padding:14px 24px;position:relative;
+  box-shadow:inset 0 8px 14px rgba(255,255,255,.75),inset 0 -10px 16px rgba(214,86,138,.28),
+    0 0 0 5px rgba(255,255,255,.4),0 10px 22px rgba(240,120,170,.35),0 2px 6px rgba(240,120,170,.25);
+  transition:transform .12s,box-shadow .12s;white-space:nowrap}
+.pillow:hover{transform:translateY(-1px)}
+.pillow:active{transform:translateY(3px) scale(.97);
+  box-shadow:inset 0 6px 10px rgba(214,86,138,.3),inset 0 4px 8px rgba(255,255,255,.5),0 0 0 4px rgba(255,255,255,.35),0 4px 10px rgba(240,120,170,.3)}
+.pillow.gold{background:linear-gradient(180deg,#FFE9AE 0%,#F7C964 55%,#EDB44A 100%);color:#7A4A12;
+  box-shadow:inset 0 8px 14px rgba(255,255,255,.75),inset 0 -10px 16px rgba(186,132,38,.3),
+    0 0 0 5px rgba(255,255,255,.4),0 10px 22px rgba(220,160,60,.4),0 2px 6px rgba(220,160,60,.3)}
+.pillow.ghost{background:#fff;color:var(--pink-deep);border:2px solid var(--pink-line);
+  box-shadow:0 6px 16px rgba(240,120,170,.22)}
+.pillow.small{padding:9px 16px;font-size:13.5px;border-radius:22px}
+.pillow.wide{width:100%;justify-content:center}
+.filebtn{display:flex;align-items:center;justify-content:center;cursor:pointer}
+.skip{display:block;margin:12px auto 0;background:none;border:none;color:var(--ink-soft);
+  font:inherit;font-size:13px;text-decoration:underline;cursor:pointer}
+/* ---------- золотые блёстки ---------- */
+.glitter{background:linear-gradient(120deg,#B8860B,#FFD86B 30%,#FFF3B0 50%,#F5C542 70%,#C9922E);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  background-size:200% auto;animation:shine 3.5s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.spark{position:absolute;width:16px;height:16px;color:var(--gold);opacity:.8;animation:twinkle 2.4s ease-in-out infinite;pointer-events:none}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7) rotate(0deg)}50%{opacity:1;transform:scale(1.15) rotate(20deg)}}
+.s1{top:12px;right:14px}.s2{top:38px;right:44px;animation-delay:.7s;width:11px;height:11px}
+.s3{bottom:16px;left:18px;animation-delay:1.3s;width:12px;height:12px}
+/* ---------- заставка ---------- */
+#splash{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background-color:#FFD7E8;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cg fill='none' stroke='%23C98A6B' stroke-width='4' stroke-linecap='round' opacity='.3'%3E%3Cpath d='M22 34a16 16 0 1 1 10 13'/%3E%3Cpath d='M86 108a14 14 0 1 0 12 8'/%3E%3Cpath d='M112 26a12 12 0 1 1 7 10'/%3E%3C/g%3E%3Cg fill='%23A8683F' opacity='.24'%3E%3Ccircle cx='72' cy='44' r='4'/%3E%3Ccircle cx='34' cy='112' r='3.5'/%3E%3Ccircle cx='124' cy='76' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  transition:opacity .6s ease;cursor:pointer}
+#splash.hide{opacity:0;pointer-events:none}
+#splash.gone{display:none}
+.sp-inner{display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px;animation:pop .8s ease}
+@keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.sp-paw{width:64px;height:64px;color:#fff;filter:drop-shadow(0 6px 14px rgba(214,86,138,.5));animation:pawpulse 2s ease-in-out infinite;margin-bottom:14px}
+@keyframes pawpulse{0%,100%{transform:scale(1) rotate(-6deg)}50%{transform:scale(1.12) rotate(6deg)}}
+.sp-studio{font-family:'Comfortaa',cursive;font-weight:700;font-size:clamp(30px,9vw,44px);letter-spacing:.18em}
+.sp-sub{font-size:13px;color:#8A4A66;margin-top:6px;letter-spacing:.06em}
+.sp-presents{font-family:'Caveat',cursive;font-size:24px;color:#B05577;margin:26px 0 4px}
+.sp-app{font-family:'Comfortaa',cursive;font-weight:700;font-size:clamp(34px,10vw,50px);color:#fff;
+  text-shadow:0 4px 18px rgba(214,86,138,.55)}
+.sp-tag{font-size:14.5px;color:#8A4A66;margin-top:8px}
+.sp-copy{position:absolute;bottom:18px;font-size:11.5px;color:#9A5A78;text-align:center;width:100%}
+/* ---------- вкладки ---------- */
+#tabs{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);width:min(94%,456px);
+  display:flex;gap:6px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);
+  border-radius:30px;padding:8px;box-shadow:0 12px 30px rgba(238,120,168,.3);border:1.5px solid #FFE0EC;z-index:40}
+.tabbtn{flex:1;border:none;background:transparent;font-family:'Nunito',sans-serif;font-weight:800;font-size:11.5px;
+  color:var(--ink-soft);border-radius:24px;padding:8px 2px 7px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:all .15s}
+.tabbtn .tico{font-size:19px;filter:grayscale(.6);opacity:.75;transition:all .15s}
+.tabbtn.active{background:linear-gradient(180deg,#FFC9DF,#F98CBC);color:#7A2F52;
+  box-shadow:inset 0 5px 8px rgba(255,255,255,.7),inset 0 -6px 10px rgba(214,86,138,.25),0 6px 14px rgba(240,120,170,.35)}
+.tabbtn.active .tico{filter:none;opacity:1;transform:scale(1.12)}
+/* ---------- вес: график ---------- */
+#wchart{margin-top:10px}
+#wchart svg{width:100%;height:auto;display:block}
+/* ---------- шаги ---------- */
+.paws{display:flex;gap:6px;margin-top:10px}
+.paws svg{width:26px;height:26px;color:var(--pink-line)}
+.paws svg.full{color:var(--pink-deep)}
+.paws svg.today{color:var(--gold)}
+.bigsteps{font-family:'Comfortaa',cursive;font-size:30px;font-weight:700;color:var(--pink-deep)}
+.smallnote{font-size:11.5px;color:var(--ink-soft);margin-top:6px}
+/* ---------- дневник ---------- */
+.stgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px;margin-top:4px}
+.stk{background:#fff;border:2px solid var(--pink-line);border-radius:20px;padding:10px 6px;text-align:center;
+  font-size:12px;font-weight:700;color:var(--ink);cursor:pointer;transition:all .12s;box-shadow:0 4px 10px rgba(240,120,170,.15)}
+.stk .se{font-size:23px;display:block;margin-bottom:3px}
+.stk.sel{border-color:var(--gold);background:#FFF7E4;transform:scale(1.03);box-shadow:0 6px 14px rgba(220,160,60,.3)}
+.aib{background:#FFF1F7;border-radius:16px 16px 16px 4px;padding:10px 13px;font-size:13.5px;line-height:1.45;
+  color:#7A3552;margin-top:8px;position:relative}
+.aib::before{content:'🐾';position:absolute;left:-7px;top:-9px;font-size:13px;background:#fff;border-radius:50%;padding:1px 2px}
+.ditem{border-top:1.5px dashed var(--pink-line);padding-top:10px;margin-top:10px}
+.ditem:first-child{border-top:none;padding-top:0;margin-top:0}
+.ddate{font-size:11.5px;font-weight:800;color:var(--ink-soft)}
+.dmood{font-size:15px;font-weight:800;margin:2px 0}
+.dtext{font-size:13.5px;color:var(--ink)}
+.dprev{max-width:120px;max-height:120px;border-radius:16px;margin-top:10px;display:none;border:2px solid var(--pink-line)}
+/* ---------- прогулка ---------- */
+.walkwrap{position:relative;width:210px;height:210px;margin:8px auto}
+.ringbg{fill:none;stroke:#FFE0EC;stroke-width:12}
+.ringfg{fill:none;stroke:url(#ringGrad);stroke-width:12;stroke-linecap:round;
+  stroke-dasharray:440;stroke-dashoffset:440;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .3s}
+.walkstate{position:absolute;top:56px;width:100%;text-align:center;font-family:'Comfortaa',cursive;font-weight:700;font-size:16px;color:var(--pink-deep)}
+.walktime{position:absolute;top:82px;width:100%;text-align:center;font-family:'Comfortaa',cursive;font-weight:700;font-size:30px;color:var(--ink)}
+.walkround{position:absolute;top:124px;width:100%;text-align:center;font-size:12.5px;color:var(--ink-soft);font-weight:800}
+#tab-walk.hot .card:first-child{background:linear-gradient(180deg,#FFF1F7,#FFDFEC)}
+/* ---------- марафон ---------- */
+.pbar{height:16px;background:#FFE4EF;border-radius:10px;overflow:hidden;margin:8px 0 4px;box-shadow:inset 0 2px 5px rgba(214,86,138,.18)}
+.pfill{height:100%;border-radius:10px;background:linear-gradient(90deg,#F98CBC,#E9B94C 85%,#FFD86B);transition:width .4s;box-shadow:inset 0 2px 4px rgba(255,255,255,.5)}
+.mcard{background:#fff;border:2px solid var(--pink-line);border-radius:24px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.mcard h4{font-family:'Comfortaa',cursive;font-size:15px;color:var(--ink)}
+.mcard .md{font-size:12px;color:var(--ink-soft);margin-top:2px}
+.price{font-family:'Comfortaa',cursive;font-weight:700;color:var(--gold-deep);white-space:nowrap}
+.medalbox{display:flex;align-items:center;gap:12px;margin-top:10px}
+.medalbox svg{width:64px;height:64px;filter:drop-shadow(0 6px 12px rgba(201,146,46,.45))}
+/* ---------- тосты, модалки, конфетти ---------- */
+#toasts{position:fixed;bottom:86px;left:50%;transform:translateX(-50%);z-index:70;display:flex;flex-direction:column;gap:8px;align-items:center;width:min(92%,440px);pointer-events:none}
+.toast{background:linear-gradient(180deg,#FFC9DF,#F98CBC);color:#7A2F52;font-weight:800;font-size:14px;
+  padding:12px 20px;border-radius:24px;box-shadow:0 10px 24px rgba(240,120,170,.4);animation:pop .25s ease;max-width:100%;text-align:center}
+.backdrop{position:fixed;inset:0;background:rgba(91,54,72,.5);backdrop-filter:blur(4px);z-index:80;display:flex;align-items:flex-end;justify-content:center}
+.mwin{background:var(--card);border-radius:30px 30px 0 0;width:min(100%,480px);max-height:86vh;overflow:auto;
+  padding:22px 20px 26px;animation:mup .3s ease;box-shadow:0 -14px 40px rgba(91,54,72,.3);position:relative}
+@keyframes mup{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+@media(min-width:560px){.backdrop{align-items:center}.mwin{border-radius:30px}}
+.mclose{position:absolute;top:14px;right:16px;border:none;background:#FFE4EF;border-radius:50%;width:32px;height:32px;font-size:15px;cursor:pointer;color:var(--ink)}
+.mhead{font-family:'Comfortaa',cursive;font-size:19px;font-weight:700;color:var(--pink-deep);margin-bottom:10px}
+.pawconfetti{position:fixed;top:-30px;font-size:22px;z-index:75;pointer-events:none;animation:fall 2.2s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(340deg);opacity:.6}}
+/* ---------- прочее ---------- */
+.licbox{background:#FFF7E4;border:1.5px solid #F2D99A;border-radius:18px;padding:12px 14px;font-size:12.5px;line-height:1.55;color:#7A4A12;margin-top:10px}
+.chip{display:inline-block;background:#FFE4EF;color:var(--pink-deep);border-radius:16px;padding:4px 12px;font-size:12px;font-weight:800;margin:2px 4px 2px 0}
+@media(min-width:520px){
+  body{padding:24px 0}
+  #frame{border-radius:36px;min-height:calc(100vh - 48px)}
+  #tabs{bottom:24px}
+}
+</style>
+</head>
+<body>
+<!-- переиспользуемые иконки -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="goldg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFE9AE"/><stop offset=".5" stop-color="#F2C766"/><stop offset="1" stop-color="#D89B33"/>
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F98CBC"/><stop offset="1" stop-color="#E9B94C"/>
+    </linearGradient>
+  </defs>
+  <symbol id="paw" viewBox="0 0 24 24">
+    <g fill="currentColor"><ellipse cx="12" cy="16.2" rx="6.2" ry="5.4"/><circle cx="5.2" cy="10.5" r="2.7"/><circle cx="9.6" cy="7.4" r="2.7"/><circle cx="14.4" cy="7.4" r="2.7"/><circle cx="18.8" cy="10.5" r="2.7"/></g>
+  </symbol>
+  <symbol id="spark" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 1.5l2 8.5 8.5 2-8.5 2-2 8.5-2-8.5L1.5 12l8.5-2z"/>
+  </symbol>
+  <symbol id="medal" viewBox="0 0 64 64">
+    <path d="M22 4h20l-6 18h-8z" fill="#EF6FA5"/><path d="M28 4h8l4 12h-8z" fill="#FFB7D5"/>
+    <circle cx="32" cy="40" r="16" fill="url(#goldg)" stroke="#C9922E" stroke-width="2"/>
+    <g transform="translate(22,30) scale(0.8)" fill="#FFF7E6"><ellipse cx="12" cy="16.2" rx="6.2" ry="5.4"/><circle cx="5.2" cy="10.5" r="2.7"/><circle cx="9.6" cy="7.4" r="2.7"/><circle cx="14.4" cy="7.4" r="2.7"/><circle cx="18.8" cy="10.5" r="2.7"/></g>
+  </symbol>
+</svg>
+
+<!-- заставка студии -->
+<div id="splash" onclick="hideSplash()">
+  <svg class="spark s1"><use href="#spark"/></svg>
+  <svg class="spark s2"><use href="#spark"/></svg>
+  <svg class="spark s3"><use href="#spark"/></svg>
+  <div class="sp-inner">
+    <svg class="sp-paw"><use href="#paw"/></svg>
+    <div class="sp-studio glitter">RAIDOPERT</div>
+    <div class="sp-sub">студия мобильных приложений · raidopert.ru</div>
+    <div class="sp-presents">представляет</div>
+    <h1 class="sp-app">Kate <span class="glitter">Leopard</span></h1>
+    <div class="sp-tag">мягкое похудение для девушек 🐾</div>
+  </div>
+  <div class="sp-copy">© 2026 Raidopert · raidopert.ru · все права защищены</div>
+</div>
+
+<div id="frame">
+  <header>
+    <div>
+      <div id="greet" class="greet">Мур-р, лапочка!</div>
+      <div id="dateline" class="dateline"></div>
+    </div>
+    <button class="gear" onclick="openSettings()" aria-label="Настройки">⚙️</button>
+  </header>
+  <main>
+    <!-- ГЛАВНАЯ -->
+    <section id="tab-home">
+      <div class="card" id="cycleCard">
+        <svg class="spark s1"><use href="#spark"/></svg>
+        <div id="cycleBody"></div>
+      </div>
+      <div class="card">
+        <h3>🐾 Вес и «зона воды»</h3>
+        <p class="note">Взвешивайся хотя бы через день. В жёлто-голубые дни цикла вес может «подпрыгнуть» на пару килограммов — это вода, а не жир, мур.</p>
+        <div class="wrow">
+          <input id="wInp" class="inp" type="number" step="0.1" min="30" max="250" inputmode="decimal" placeholder="Сегодня, кг">
+          <button class="pillow" onclick="addWeight()">Записать</button>
+        </div>
+        <div id="wchart"></div>
+        <p id="wComment" class="hand"></p>
+      </div>
+      <div class="card" id="stepsCard"></div>
+      <div class="card">
+        <h3>✨ Честный калькулятор 7700</h3>
+        <p class="note">1 кг жира ≈ 7700 ккал. Переведём твою цель в еду — просто для наглядности, без запретов 🐾</p>
+        <div class="wrow">
+          <input id="kcal7700" class="inp" type="number" step="0.5" min="0.5" max="50" inputmode="decimal" placeholder="Сколько кг хочется скинуть">
+          <button class="pillow gold" onclick="calc7700()">Перевести</button>
+        </div>
+        <p id="res7700" class="note" style="margin-top:10px"></p>
+      </div>
+      <p class="foot">Kate Leopard v0.1 · © 2026 Raidopert · raidopert.ru</p>
+    </section>
+
+    <!-- ДНЕВНИК -->
+    <section id="tab-diary" hidden>
+      <div class="card">
+        <h3>📔 Дневник на 10 секунд</h3>
+        <p class="note">Без калорий и граммов. Отметь, как прошёл день, — котик всё поймёт 💗</p>
+        <div id="stickerGrid" class="stgrid"></div>
+        <textarea id="dText" class="inp" rows="2" maxlength="500" placeholder="Пара слов (можно пропустить)…"></textarea>
+        <img id="dPreview" class="dprev" alt="фото дня">
+        <div class="wrow">
+          <label class="pillow ghost filebtn">📷 Фото<input id="dPhoto" type="file" accept="image/*" hidden></label>
+          <button class="pillow" onclick="saveDiary()">Сохранить</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3>🐾 Дневничок</h3>
+        <div id="dHist"></div>
+      </div>
+    </section>
+
+    <!-- ПРОГУЛКА -->
+    <section id="tab-walk" hidden>
+      <div class="card">
+        <h3>🚶‍♀️ Японская ходьба (ИВТ)</h3>
+        <p class="note">Интервальная быстрая ходьба: <b>3 минуты быстро → 3 минуты спокойно</b>, ×5 кругов = 30 минут. По исследованиям: +20% выносливости и −20% рисков «болезней образа жизни» за полгода.</p>
+        <div class="walkwrap">
+          <svg viewBox="0 0 160 160" width="210" height="210">
+            <circle class="ringbg" cx="80" cy="80" r="70"/>
+            <circle id="ringfg" class="ringfg" cx="80" cy="80" r="70"/>
+          </svg>
+          <div id="walkState" class="walkstate">Готова?</div>
+          <div id="walkTime" class="walktime">30:00</div>
+          <div id="walkRound" class="walkround">круг 0/5</div>
+        </div>
+        <div class="wrow center">
+          <button id="walkBtn" class="pillow" onclick="walkToggle()">Начать прогулку 🐾</button>
+          <button id="walkStop" class="pillow ghost" onclick="walkFinish(true)" hidden>Закончить</button>
+        </div>
+      </div>
+      <div class="card" id="walkStats"></div>
+      <p class="foot">В прототипе шаги вводятся вручную. В приложении на телефон подключим Health Connect (Android) и HealthKit (iPhone) — шаги будут считаться сами.</p>
+    </section>
+
+    <!-- МАРАФОН -->
+    <section id="tab-marathon" hidden>
+      <div class="card">
+        <svg class="spark s1"><use href="#spark"/></svg>
+        <h3>🏅 Марафоны с медалями</h3>
+        <div id="marBody"></div>
+      </div>
+      <div class="card">
+        <h3>🎁 Как это работает</h3>
+        <p class="note">Чек-ин каждый день: взвесилась, записала дневник или прошагала — засчитано. В конце — <b>настоящая медаль почтой</b> (или красивый цифровой бейдж). Платёж подключим через ЮKassa/СБП, в прототипе — демо-режим.</p>
+      </div>
+    </section>
+  </main>
+  <nav id="tabs">
+    <button class="tabbtn active" data-tab="home" onclick="goTab('home')"><span class="tico">🐾</span>Дом</button>
+    <button class="tabbtn" data-tab="diary" onclick="goTab('diary')"><span class="tico">📔</span>Дневник</button>
+    <button class="tabbtn" data-tab="walk" onclick="goTab('walk')"><span class="tico">🚶‍♀️</span>Прогулка</button>
+    <button class="tabbtn" data-tab="marathon" onclick="goTab('marathon')"><span class="tico">🏅</span>Марафон</button>
+  </nav>
+</div>
+<div id="toasts"></div>
+<div id="modal-root"></div>
+<script>
+'use strict';
+/* ================= Kate Leopard v0.1 · © Raidopert · raidopert.ru ================= */
+const LSKEY='kateLeopard_v1';
+const DEFAULTS={onboarded:false,name:'',cycleLen:28,lastPeriod:'',goal:'',goalSteps:6000,
+  weights:[],steps:{},diary:[],walks:0,marathon:{active:null,started:'',checkins:[]}};
+function loadData(){
+  try{const raw=localStorage.getItem(LSKEY);
+    if(raw){const p=JSON.parse(raw);
+      return Object.assign({},DEFAULTS,p,{marathon:Object.assign({},DEFAULTS.marathon,p.marathon||{})});}
+  }catch(e){console.warn('load',e);}
+  return JSON.parse(JSON.stringify(DEFAULTS));
+}
+let data=loadData();
+function save(){try{localStorage.setItem(LSKEY,JSON.stringify(data));}catch(e){toast('У котика кончилась память — попробуй меньше фото 🙈');}}
+function fmtD(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function today(){return fmtD(new Date());}
+function parseD(s){const p=s.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);}
+function diffDays(a,b){return Math.round((parseD(b)-parseD(a))/864e5);}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function ruDate(s){return parseD(s).toLocaleDateString('ru-RU',{day:'numeric',month:'short'});}
+function $(id){return document.getElementById(id);}
+
+/* ================= цикл и «зона воды» ================= */
+function cycleDay(){
+  if(!data.lastPeriod)return null;
+  const n=diffDays(data.lastPeriod,today());
+  if(n<0)return null;
+  return (n%data.cycleLen)+1;
+}
+function phaseInfo(){
+  const cd=cycleDay();if(cd===null)return null;
+  const L=data.cycleLen;
+  if(cd<=5)return{t:'Месячные',e:'🌸',m:'Береги себя, лапочка. Вода уходит — скоро полегчает.'};
+  if(cd<=Math.round(L*.4))return{t:'Фолликулярная фаза',e:'🌱',m:'Энергия растёт, как у котёнка на солнышке. Отличное время для прогулок!'};
+  if(cd>=Math.round(L*.45)&&cd<=Math.round(L*.55))return{t:'Овуляция',e:'✨',m:'Возможны +0,5–1 кг воды и тяга к сладенькому — это гормоны, а не ты.'};
+  if(cd>=L-5)return{t:'ПМС — зона воды',e:'💧',m:'Организм держит до +2 кг воды. Вес «растёт», а жир — нет, мур.'};
+  return{t:'Лютеиновая фаза',e:'🌙',m:'Тело готовится к новому циклу. Наш стиль — мягкость: без героизма, с любовью.'};
+}
+function isWaterDay(dstr){
+  if(!data.lastPeriod)return false;
+  const d=diffDays(data.lastPeriod,dstr);
+  if(d<0)return false;
+  const L=data.cycleLen,cd=(d%L)+1;
+  return cd>=L-6||(cd>=Math.round(L*.45)&&cd<=Math.round(L*.55));
+}
+
+/* ================= вес и график ================= */
+function addWeight(){
+  const v=parseFloat($('wInp').value);
+  if(!v||v<30||v>250){toast('Введи вес от 30 до 250 кг 🙀');return;}
+  const t=today(),ex=data.weights.find(w=>w.d===t);
+  if(ex)ex.w=v;else data.weights.push({d:t,w:v});
+  data.weights.sort((a,b)=>a.d<b.d?-1:1);
+  save();$('wInp').value='';renderHome();
+  toast('Записала, мур-р 💗');
+}
+function weightComment(){
+  const el=$('wComment'),pts=data.weights.slice(-2);
+  if(pts.length<2){el.textContent='Добавь ещё одно взвешивание — и я начну понимать твою кривую 🐾';return;}
+  const d=+(pts[1].w-pts[0].w).toFixed(1),ph=phaseInfo();
+  const water=ph&&(ph.t==='ПМС — зона воды'||ph.t==='Овуляция');
+  let t;
+  if(d>0.05)t=water?`+${d} кг — это вода перед циклом, мур-р. Жир так быстро не появляется 💧💗`
+                   :`+${d} кг — просто такой день. Завтра продолжим мягко, без самобичевания 🐾`;
+  else if(d<-0.05)t=`−${Math.abs(d)} кг — ты большая молодец, лапочка! Так держать 💗`;
+  else t='Вес на месте — это тоже победа: стабильность значит, что всё под контролем, мур.';
+  el.textContent=t;
+}
+function chartSVG(){
+  const pts=data.weights.slice(-14);
+  if(pts.length<2)return'<div class="hint">Взвесься два дня подряд — и здесь появится твоя кривая 🐾</div>';
+  const W=340,H=190,padL=36,padR=14,padT=22,padB=26;
+  const ws=pts.map(p=>p.w),mn=Math.min(...ws),mx=Math.max(...ws);
+  const hasWater=pts.some(p=>isWaterDay(p.d));
+  const lo=mn-0.8,hi=Math.max(mx+(hasWater?2.6:1),mn+2.4);
+  const X=i=>padL+(W-padL-padR)*i/(pts.length-1);
+  const Y=v=>padT+(H-padT-padB)*(1-(v-lo)/(hi-lo));
+  let s='';
+  if(hasWater){
+    const idx=pts.map((p,i)=>isWaterDay(p.d)?i:null).filter(v=>v!==null);
+    const trend=pts.slice(-3).reduce((a,p)=>a+p.w,0)/Math.min(3,pts.length);
+    const x0=X(idx[0])-10,x1=X(idx[idx.length-1])+10;
+    const yT=Y(trend+2.2),yB=Y(trend);
+    if(yB>yT)s+=`<rect x="${x0}" y="${yT}" width="${Math.max(26,x1-x0)}" height="${yB-yT}" fill="${'#BFE3F7'}" opacity=".4" rx="8"/>
+      <text x="${x0+2}" y="${yT-5}" font-size="10" fill="#5A93B8" font-family="Nunito">зона воды (до +2 кг)</text>`;
+  }
+  if(data.goal&&data.goal>lo&&data.goal<hi)
+    s+=`<line x1="${padL}" x2="${W-padR}" y1="${Y(data.goal)}" y2="${Y(data.goal)}" stroke="#E9B94C" stroke-dasharray="5 4" stroke-width="1.5"/>
+      <text x="${padL+2}" y="${Y(data.goal)-4}" font-size="10" fill="#C9922E" font-family="Nunito">цель ${data.goal} кг</text>`;
+  s+=`<polyline points="${pts.map((p,i)=>X(i)+','+Y(p.w)).join(' ')}" fill="none" stroke="#EF6FA5" stroke-width="2.5" stroke-linejoin="round"/>`;
+  pts.forEach((p,i)=>{s+=`<circle cx="${X(i)}" cy="${Y(p.w)}" r="3.6" fill="#EF6FA5" stroke="#fff" stroke-width="1.5"/>`;});
+  const lx=[0,Math.floor((pts.length-1)/2),pts.length-1];
+  lx.forEach(i=>{s+=`<text x="${X(i)}" y="${H-8}" font-size="10" fill="#93687C" text-anchor="middle" font-family="Nunito">${ruDate(pts[i].d)}</text>`;});
+  s+=`<text x="${padL-4}" y="${Y(hi)+9}" font-size="9.5" fill="#93687C" text-anchor="end" font-family="Nunito">${hi.toFixed(1)}</text>`;
+  s+=`<text x="${padL-4}" y="${Y(lo)+3}" font-size="9.5" fill="#93687C" text-anchor="end" font-family="Nunito">${lo.toFixed(1)}</text>`;
+  return`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="график веса">${s}</svg>`;
+}
+
+/* ================= шаги ================= */
+function addSteps(n){
+  const t=today();data.steps[t]=(data.steps[t]||0)+n;save();renderHome();
+  toast(n>=0?`+${n.toLocaleString('ru-RU')} шагов 🐾`:'Пересчитали!');
+}
+function stepsStreak(){
+  let s=0,d=new Date();
+  if((data.steps[fmtD(d)]||0)<data.goalSteps)d.setDate(d.getDate()-1);
+  while((data.steps[fmtD(d)]||0)>=data.goalSteps){s++;d.setDate(d.getDate()-1);}
+  return s;
+}
+function renderSteps(){
+  const t=today(),st=data.steps[t]||0,goal=data.goalSteps,pct=Math.min(100,Math.round(st/goal*100));
+  let paws='';
+  for(let i=6;i>=0;i--){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const full=(data.steps[fmtD(d)]||0)>=goal;
+    paws+=`<svg class="${full?'full':''} ${i===0?'today':''}"><use href="#paw"/></svg>`;
+  }
+  const streak=stepsStreak();
+  $('stepsCard').innerHTML=`<h3>👣 Шаги</h3>
+    <div class="bigsteps">${st.toLocaleString('ru-RU')} <span style="font-size:14px;color:var(--ink-soft)">/ ${goal.toLocaleString('ru-RU')} · ${pct}%</span></div>
+    <div class="paws">${paws}</div>
+    <div class="note" style="margin-top:8px">Серия: <b>${streak} ${streak===1?'день':'дн.'}</b> подряд 🐾 Неделя лапок выше: золотая — сегодня.</div>
+    <div class="wrow">
+      <button class="pillow small" onclick="addSteps(1000)">+1000 шагов</button>
+      <button class="pillow small ghost" onclick="addSteps(500)">+500</button>
+      <button class="pillow small ghost" onclick="addSteps(-500)">−500</button>
+    </div>
+    <div class="smallnote">В прототипе шаги вводятся вручную — в мобильном приложении они будут считаться сами (Health Connect / HealthKit).</div>`;
+}
+
+/* ================= дневник ================= */
+const STICKERS=[
+  {id:'calm',e:'😌',t:'всё мур-мур'},
+  {id:'happy',e:'🐱',t:'я — счастливый котик'},
+  {id:'treat',e:'🍰',t:'баловала себя вкусненьким'},
+  {id:'care',e:'🥗',t:'заботилась о себе'},
+  {id:'hard',e:'🥲',t:'было непросто'},
+  {id:'sleep',e:'😴',t:'спала как кот на солнышке'}];
+const AI_COMMENTS={
+  calm:['Так держать, лапочка — ровный и спокойный день. Это и есть баланс 💗','Мур-р. Спокойствие — лучший соус, ничего добавлять не нужно.'],
+  happy:['Смотри, как светится твой хвостик! Такие дни и держат всё остальное 🐾','Ура-ура! Котик очень тобой гордится.'],
+  treat:['Вкусненькое — часть жизни, а не срыв. Жизнь без тортика — грустная жизнь 🍰','Один десерт не решает ничего, кроме настроения. Всё под контролем, мур.'],
+  care:['Ты позаботилась о себе — это и есть путь: тихий и настоящий 💗','Каждый такой день — кирпичик в твою лёгкость. Мур-р.'],
+  hard:['Сложные дни — не поражение, а часть пути. Завтра будет мягче, я рядом 🐾','Ты не сорвалась — ты живёшь. Котик держит тебя за лапку.'],
+  sleep:['Сон — тайное оружие стройности. Ты всё сделала правильно 😴💗','Мур-р, выспавшаяся кошка — счастливая кошка.']};
+let selSticker=null,photoData=null;
+function renderStickers(){
+  $('stickerGrid').innerHTML=STICKERS.map(s=>
+    `<div class="stk ${selSticker===s.id?'sel':''}" onclick="pickSticker('${s.id}')"><span class="se">${s.e}</span>${s.t}</div>`).join('');
+}
+function pickSticker(id){selSticker=id;renderStickers();}
+function saveDiary(){
+  const tx=$('dText').value.trim();
+  if(!selSticker&&!tx&&!photoData){toast('Отметь стикер, напиши слово или добавь фото 🐾');return;}
+  const st=STICKERS.find(s=>s.id===selSticker);
+  const pool=AI_COMMENTS[selSticker]||['Спасибо, что записала день — котик читает и урчит 💗'];
+  const ai=pool[Math.floor(Math.random()*pool.length)];
+  data.diary.unshift({d:today(),sid:selSticker,tx:tx,ph:photoData,ai:ai});
+  if(data.diary.length>60)data.diary=data.diary.slice(0,60);
+  save();
+  selSticker=null;photoData=null;
+  $('dText').value='';$('dPhoto').value='';$('dPreview').style.display='none';
+  renderStickers();renderDiary();renderHome();
+  toast('Записала, мур-р 💗');
+}
+function renderDiary(){
+  const el=$('dHist');
+  if(!data.diary.length){el.innerHTML='<div class="hint">Пока пусто. Первый день — самый важный 🐾</div>';return;}
+  el.innerHTML=data.diary.slice(0,10).map(e=>{
+    const st=STICKERS.find(s=>s.id===e.sid);
+    return`<div class="ditem">
+      <div class="ddate">${ruDate(e.d)} · ${st?st.e+' '+st.t:' дневник'}</div>
+      ${e.tx?`<div class="dtext">${esc(e.tx)}</div>`:''}
+      ${e.ph?`<img src="${e.ph}" alt="" style="max-width:110px;border-radius:14px;margin-top:6px;border:1.5px solid var(--pink-line)">`:''}
+      <div class="aib">${e.ai}</div></div>`;
+  }).join('');
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  $('dPhoto').addEventListener('change',e=>{
+    const f=e.target.files[0];if(!f)return;
+    const r=new FileReader();
+    r.onload=()=>{const img=new Image();
+      img.onload=()=>{const S=180,sc=Math.min(S/img.width,S/img.height,1);
+        const c=document.createElement('canvas');
+        c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);
+        c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+        photoData=c.toDataURL('image/jpeg',.7);
+        const pv=$('dPreview');pv.src=photoData;pv.style.display='inline-block';};
+      img.src=r.result;};
+    r.readAsDataURL(f);
+  });
+});
+
+/* ================= прогулка ИВТ ================= */
+const FAST=180,CALM=180,ROUNDS=5;
+let walk={state:'idle',round:0,fast:true,endAt:0,left:FAST,timer:null};
+const RING_C=440;
+function walkTotalLeft(){const done=(walk.round-1)*(FAST+CALM)+(walk.fast?0:CALM);return (ROUNDS*(FAST+CALM))-done-walk.left;}
+function walkUpdate(){
+  $('walkTime').textContent=Math.floor(walk.left/60)+':'+String(Math.round(walk.left%60)).padStart(2,'0');
+  const fast=walk.fast&&walk.state==='run';
+  $('walkState').textContent=walk.state==='idle'?'Готова?':walk.state==='pause'?'ПАУЗА 🐾':fast?'БЫСТРО! 🐾':'СПОКОЙНО 💗';
+  $('walkState').style.color=fast?'#D6336C':'#93687C';
+  $('walkRound').textContent='круг '+walk.round+'/'+ROUNDS;
+  const total=ROUNDS*(FAST+CALM);
+  $('ringfg').style.strokeDashoffset=RING_C*(1-Math.min(1,walkTotalLeft()/total));
+}
+function walkToggle(){
+  if(walk.state==='run'){clearInterval(walk.timer);walk.state='pause';$('walkBtn').textContent='Продолжить 🐾';return;}
+  if(walk.state==='idle'){walk.round=1;walk.fast=true;walk.left=FAST;}
+  walk.state='run';
+  walk.endAt=Date.now()+walk.left*1000;
+  $('walkBtn').textContent='Пауза';
+  $('walkStop').hidden=false;
+  walk.timer=setInterval(()=>{
+    walk.left=Math.max(0,(walk.endAt-Date.now())/1000);
+    if(walk.left<=0)walkNext();
+    walkUpdate();
+  },250);
+  walkUpdate();
+}
+function walkNext(){
+  try{if(navigator.vibrate)navigator.vibrate(walk.fast?[300,120,300]:500);}catch(e){}
+  if(walk.fast){walk.fast=false;walk.left=CALM;}
+  else if(walk.round<ROUNDS){walk.fast=true;walk.round++;walk.left=FAST;}
+  else{walkFinish(false);return;}
+  walk.endAt=Date.now()+walk.left*1000;
+}
+function walkFinish(early){
+  clearInterval(walk.timer);
+  const finished=!early&&walk.round>ROUNDS;
+  const phaseLen=walk.fast?FAST:CALM;
+  const elapsedSec=Math.max(0,(walk.round-1)*(FAST+CALM)+(phaseLen-Math.max(0,walk.left)));
+  walk={state:'idle',round:0,fast:true,endAt:0,left:FAST,timer:null};
+  $('walkBtn').textContent='Начать прогулку 🐾';$('walkStop').hidden=true;
+  $('tab-walk').classList.remove('hot');
+  walkUpdate();
+  const mins=Math.round(elapsedSec/60);
+  data.walks++;
+  const t=today();
+  data.steps[t]=(data.steps[t]||0)+Math.round(mins*120);
+  save();renderHome();renderWalkStats();
+  if(finished){pawConfetti();medalModal('Прогулка завершена!','30 минут ИВТ — отличная работа, лапочка! +3600 шагов уже в твоём дневчике 🐾');}
+  else toast('Прогулка сохранена: ~'+mins+' мин 💗');
+}
+function renderWalkStats(){
+  const week=Object.entries(data.steps).filter(([d])=>diffDays(d,today())<7);
+  const sum=week.reduce((a,[,v])=>a+v,0);
+  $('walkStats').innerHTML=`<h3>🏃‍♀️ Твоя статистика</h3>
+    <div class="note" style="margin-top:6px">Прогулок ИВТ всего: <b>${data.walks}</b><br>
+    Шагов за 7 дней: <b>${sum.toLocaleString('ru-RU')}</b><br>
+    Серия дней по цели: <b>${stepsStreak()}</b> 🐾</div>`;
+}
+function pawConfetti(){
+  for(let i=0;i<18;i++){
+    const s=document.createElement('span');
+    s.className='pawconfetti';s.textContent='🐾';
+    s.style.left=Math.random()*90+5+'%';
+    s.style.animationDelay=Math.random()*.8+'s';
+    s.style.fontSize=16+Math.random()*16+'px';
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),3200);
+  }
+}
+
+/* ================= марафоны ================= */
+const MARS={
+  soft:{n:'Мягкий марафон',days:14,price:199,d:'14 дней чек-инов + медаль'},
+  month:{n:'Месяц с котиком',days:30,price:299,d:'30 дней + медаль почтой'},
+  express:{n:'Экспресс-мур',days:7,price:149,d:'7 дней разгона + бейдж'}};
+function activityToday(){
+  const t=today();
+  return !!data.weights.find(w=>w.d===t)||data.diary.some(e=>e.d===t)||(data.steps[t]||0)>0;
+}
+function joinMar(key){
+  const m=MARS[key];
+  modal(`<div class="mhead">${m.n} — ${m.price} ₽</div>
+    <p class="note">${m.days} дней чек-инов, прогресс-лапки и в конце — медалька. 
+    Платёж через ЮKassa/СБП подключим в следующей версии. В прототипе жми демо-кнопку 🐾</p>
+    <button class="pillow gold wide" onclick="activateMar('${key}')">Активировать (демо) 🏅</button>
+    <button class="skip" onclick="closeModal()">Позже</button>`);
+}
+function activateMar(key){
+  data.marathon={active:key,started:today(),checkins:[]};
+  save();closeModal();renderMarathon();
+  toast('Марафон начался! Удачи, лапочка 🐾');
+}
+function leaveMar(){
+  modal(`<div class="mhead">Выйти из марафона?</div>
+    <p class="note">Прогресс обнулится, мур. Ты уверена?</p>
+    <button class="pillow ghost wide" onclick="doLeave()">Выйти</button>
+    <button class="skip" onclick="closeModal()">Остаться</button>`);
+}
+function doLeave(){data.marathon={active:null,started:'',checkins:[]};save();closeModal();renderMarathon();}
+function checkin(){
+  const m=data.marathon,def=MARS[m.active];
+  if(!m.active||m.checkins.includes(today()))return;
+  if(!activityToday()){toast('Сначала маленькое дело: взвесься, запиши дневник или добавь шаги 🐾');return;}
+  m.checkins.push(today());save();renderMarathon();
+  if(m.checkins.length>=def.days){pawConfetti();medalModal('МЕДАЛЬ ТВОЯ! 🏅',`«${def.n}» пройден полностью! ${m.checkins.length} чек-инов — ты настоящая леопард-лапка. Медаль уже мурчит на полке 💗`);}
+  else if(m.checkins.length%7===0){pawConfetti();toast(`Серебряная лапка за ${m.checkins.length} дней! 🥈`);}
+  else toast('Чек-ин засчитан, мур-р 💗');
+}
+function renderMarathon(){
+  const el=$('marBody'),m=data.marathon;
+  if(!m.active){
+    el.innerHTML=`<p class="note">Выбирай марафон — цены как у кофе с десертом, а пользы на месяц 🐾</p>`+
+      Object.entries(MARS).map(([k,v])=>`<div class="mcard"><div><h4>${v.n}</h4><div class="md">${v.d}</div></div>
+        <div style="text-align:right"><div class="price">${v.price} ₽</div>
+        <button class="pillow small" style="margin-top:6px" onclick="joinMar('${k}')">Хочу!</button></div></div>`).join('')+
+      `<div class="smallnote">С тобой идут 2 340 мур-котиков (в прототипе — демо-счётчик).</div>`;
+    return;
+  }
+  const def=MARS[m.active];
+  const dayN=Math.min(diffDays(m.started,today())+1,def.days);
+  const done=m.checkins.length,checked=m.checkins.includes(today());
+  const pct=Math.round(done/def.days*100);
+  const finished=done>=def.days;
+  el.innerHTML=`<h4 style="font-family:Comfortaa,cursive;color:var(--pink-deep);margin-bottom:4px">${def.n}</h4>
+    <div class="note">День ${dayN} из ${def.days} · чек-инов: ${done} · осталось ${Math.max(0,def.days-done)} 🐾</div>
+    <div class="pbar"><div class="pfill" style="width:${pct}%"></div></div>
+    <div style="font-size:12px;color:var(--ink-soft);text-align:right">${pct}%</div>
+    ${finished?`<div class="medalbox"><svg><use href="#medal"/></svg><div><b>Медаль получена!</b><br>
+      <span style="font-size:12.5px;color:var(--ink-soft)">«${def.n}» пройден, лапка-леопард 💗</span></div></div>`
+      :`<button class="pillow ${checked?'ghost':''} wide" style="margin-top:10px" onclick="checkin()" ${checked?'disabled':''}>
+        ${checked?'Сегодня уже отмечено ✔':'Чек-ин за сегодня 🐾'}</button>`}
+    <div class="smallnote">Бейджи-лапки: ${'🐾'.repeat(Math.min(9,Math.floor(done/7))||0)||'пока 0'} (за каждые 7 дней)</div>
+    <button class="skip" onclick="leaveMar()">выйти из марафона</button>`;
+}
+
+/* ================= калькулятор 7700 ================= */
+function plural(n,f){
+  const n10=n%10,n100=n%100;
+  return f[(n10===1&&n100!==11)?0:(n10>=2&&n10<=4&&(n100<10||n100>=20))?1:2];
+}
+function calc7700(){
+  const kg=parseFloat($('kcal7700').value);
+  if(!kg||kg<=0||kg>50){toast('Введи цель от 0,5 до 50 кг 🐾');return;}
+  const kcal=Math.round(kg*7700);
+  const sh=Math.max(1,Math.round(kcal/550)),bo=Math.max(1,Math.round(kcal/250));
+  $('res7700').innerHTML=`−${String(kg).replace('.',',')} кг ≈ <b>${kcal.toLocaleString('ru-RU')} ккал</b> — это как <b>${sh} ${plural(sh,['шаверма','шавермы','шаверм'])}</b> или <b>${bo} ${plural(bo,['тарелка','тарелки','тарелок'])} борща</b> 🍜<br>
+    <span style="font-size:12px">Мур: это не про запреты, а про наглядность. Маленький дефицит + прогулки = мягкий путь 💗</span>`;
+}
+
+/* ================= модалки, тосты, настройки ================= */
+function toast(msg){
+  const box=$('toasts'),t=document.createElement('div');
+  t.className='toast';t.textContent=msg;box.appendChild(t);
+  setTimeout(()=>t.remove(),2600);
+}
+function modal(html){
+  $('modal-root').innerHTML=`<div class="backdrop" onclick="if(event.target===this)closeModal()">
+    <div class="mwin">
+      <button class="mclose" onclick="closeModal()">✕</button>${html}</div></div>`;
+}
+function closeModal(){$('modal-root').innerHTML='';}
+function medalModal(title,text){
+  modal(`<div style="text-align:center">
+    <svg style="width:110px;height:110px;filter:drop-shadow(0 8px 18px rgba(201,146,46,.5))"><use href="#medal"/></svg>
+    <div class="mhead" style="margin-top:10px">${title}</div>
+    <p class="note">${text}</p>
+    <button class="pillow gold wide" onclick="closeModal()">Мур-р! 💗</button></div>`);
+}
+const LICENSE_TXT=`© 2026 RAIDOPERT (raidopert.ru). Все права защищены.
+
+Приложение Kate Leopard, его код, дизайн, тексты и графика — исключительная собственность студии Raidopert. Копирование, распространение, продажа и создание производных работ без письменного разрешения студии запрещены.
+
+Kate Leopard™ и Raidopert™ — торговые марки Raidopert.
+
+Полный текст лицензии: файл LICENSE.txt в репозитории проекта.`;
+function openSettings(){
+  modal(`<div class="mhead">Настройки 🐾</div>
+    <p class="note"><b>Приватность.</b> Все данные живут только в памяти твоего телефона. Никаких почт, паролей и передач третьим лицам — только ты и котик 💗</p>
+    <p class="note"><b>О студии.</b> Kate Leopard — продукт студии <b>Raidopert</b> · <a href="https://raidopert.ru" target="_blank" rel="noopener">raidopert.ru</a></p>
+    <div class="licbox"><b>Лицензия</b><br>${LICENSE_TXT.replace(/\n/g,'<br>')}</div>
+    <div class="wrow" style="margin-top:14px">
+      <button class="pillow small ghost" onclick="openOnboarding()">Изменить профиль</button>
+      <button class="pillow small ghost" onclick="resetData()">Сбросить всё</button>
+    </div>`);
+}
+function resetData(){
+  modal(`<div class="mhead">Точно сбросить всё?</div>
+    <p class="note">Вес, дневник, шаги и марафоны исчезнут навсегда, мур.</p>
+    <button class="pillow ghost wide" onclick="doReset()">Да, сбросить</button>
+    <button class="skip" onclick="closeModal()">Оставить</button>`);
+}
+function doReset(){localStorage.removeItem(LSKEY);location.reload();}
+
+/* ================= онбординг ================= */
+function openOnboarding(){
+  const lenOpts=Array.from({length:20},(_,i)=>i+21).map(n=>
+    `<option ${n===data.cycleLen?'selected':''} value="${n}">${n} дней</option>`).join('');
+  modal(`<div class="mhead">Знакомство 🐾</div>
+    <p class="note">Данные живут только на твоём телефоне. Никаких почт и паролей — только ты и котик 💗</p>
+    <label class="lbl">Как тебя звать? (можно псевдоним)</label>
+    <input id="obName" class="inp" placeholder="лапочка" value="${esc(data.name)}">
+    <label class="lbl">Средняя длина цикла</label>
+    <select id="obLen" class="inp">${lenOpts}</select>
+    <label class="lbl">Первый день последних месячных</label>
+    <input id="obPeriod" class="inp" type="date" value="${data.lastPeriod}">
+    <label class="lbl">Цель по весу, кг (необязательно)</label>
+    <input id="obGoal" class="inp" type="number" step="0.1" inputmode="decimal" placeholder="например, 58" value="${data.goal}">
+    <button class="pillow wide" style="margin-top:16px" onclick="saveOnboarding()">Мы готовы! 🐾</button>
+    <button class="skip" onclick="saveOnboarding(true)">Позже</button>`);
+}
+function saveOnboarding(skip){
+  if(!skip){
+    const n=$('obName').value.trim();
+    data.name=n||'лапочка';
+    data.cycleLen=parseInt($('obLen').value,10)||28;
+    const p=$('obPeriod').value;
+    if(p&&diffDays(p,today())>=0)data.lastPeriod=p;
+    const g=parseFloat($('obGoal').value);
+    data.goal=(g&&g>30&&g<250)?g:'';
+  }
+  data.onboarded=true;save();closeModal();renderHome();
+  if(!skip)toast(`Мур-р, ${data.name}! Всё готово 🐾`);
+}
+
+/* ================= главная ================= */
+function renderHome(){
+  $('greet').textContent=`Мур-р, ${data.name||'лапочка'}!`;
+  $('dateline').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+  const cb=$('cycleBody'),ph=phaseInfo();
+  if(ph){
+    const cd=cycleDay();
+    cb.innerHTML=`<h3>💗 Цикл и настроение веса</h3>
+      <div style="font-size:15px;font-weight:800;margin:4px 0">${ph.e} ${ph.t} · день цикла ${cd}</div>
+      <p class="hand" style="margin-top:2px">${ph.m}</p>`;
+  }else{
+    cb.innerHTML=`<h3>💗 Цикл и настроение веса</h3>
+      <p class="note">Заполни дату цикла в профиле — и я начну подсказывать, когда вес «прыгает» из-за воды, а не из-за еды 💗</p>
+      <button class="pillow small" onclick="openOnboarding()">Заполнить профиль 🐾</button>`;
+  }
+  $('wchart').innerHTML=chartSVG();
+  weightComment();
+  renderSteps();
+}
+
+/* ================= вкладки ================= */
+function goTab(name){
+  document.querySelectorAll('main section').forEach(s=>s.hidden=s.id!=='tab-'+name);
+  document.querySelectorAll('.tabbtn').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
+  if(name==='walk')renderWalkStats();
+  if(name==='marathon')renderMarathon();
+  if(name==='diary')renderDiary();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ================= заставка и старт ================= */
+function hideSplash(){
+  const s=$('splash');if(!s||s.classList.contains('hide'))return;
+  s.classList.add('hide');
+  setTimeout(()=>s.classList.add('gone'),700);
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  renderHome();renderStickers();renderDiary();renderMarathon();renderWalkStats();
+  if(!data.onboarded)setTimeout(openOnboarding,3100);
+  setTimeout(hideSplash,2800);
+});
+</script>
+</body>
+</html>
