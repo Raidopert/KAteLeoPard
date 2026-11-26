@@ -1,0 +1,46 @@
+<!--
+  Карточка Kate Leopard для raidopert.ru
+  Куда вставить: секция <section id="programs"> внутрь <div class="grid gap-6 md:grid-cols-2">
+  (после карточки MUZSTUDIO — порядок: CatScribbles, MuzStudio, … Kate Leopard).
+  Это обычный HTML — в Next.js вставить как JSX или через dangerouslySetInnerHTML;
+  при переносе в JSX: class → className, svg-атрибуты camelCase не нужны (они уже совместимы),
+  xmlns у svg можно убрать.
+
+  Все ссылки ведут на веб-версию PWA (GitHub Pages, уже работает).
+  Если хотите хостить приложение на своём домене — загрузите содержимое
+  kate-leopard-site.zip в папку public/ сборки сайта (появится /kate-leopard/)
+  и замените в трёх кнопках https://raidopert.github.io/KAteLeoPard/ на /kate-leopard/.
+-->
+<article class="rps-panel rounded-2xl p-6 flex flex-col gap-3">
+  <div class="flex items-center gap-3">
+    <img alt="Иконка Kate Leopard — карамельный леопард с большими глазами на розовом фоне" loading="lazy" width="48" height="48" decoding="async" class="rounded-2xl border border-[#E8B95C]/40 shrink-0" src="https://raidopert.github.io/KAteLeoPard/icons/icon-192.png"/>
+    <div class="flex flex-col">
+      <h3 class="text-2xl font-bold text-[#E8B95C]" style="font-family:var(--font-pixel)">KATE LEOPARD</h3>
+      <span class="text-xs text-[#F2E3CF]/60">Мягкое похудение · v0.4.1</span>
+    </div>
+  </div>
+  <p class="text-[#F2E3CF]/85">Милое приложение для мягкого похудения: график веса с голубой «зоной воды» (в ПМС и овуляцию +1,5–2 кг — это гормоны, а не переедание), дневник на 10 секунд без калорий, механика «Я хочу съесть…» с заменами и наградами-лапками, пищевой портрет (тип фигуры, привычки, личные топы блюд), шаги, вода, сон и марафоны. Без регистрации: данные живут только на телефоне.</p>
+  <div class="flex flex-wrap gap-2 text-xs">
+    <span class="rounded-full bg-[#2a0923] border border-[#E8B95C]/30 px-2.5 py-1">Приложение</span>
+    <span class="rounded-full bg-[#2a0923] border border-[#E8B95C]/30 px-2.5 py-1">Для девушек 18–40</span>
+    <span class="rounded-full bg-[#2a0923] border border-[#E8B95C]/30 px-2.5 py-1">Цикл + вес</span>
+    <span class="rounded-full bg-[#2a0923] border border-[#E8B95C]/30 px-2.5 py-1">Без регистрации</span>
+    <span class="rounded-full bg-[#2a0923] border border-[#E8B95C]/30 px-2.5 py-1">PWA · офлайн</span>
+    <span class="rounded-full bg-[#2a0923] border border-[#E8B95C]/30 px-2.5 py-1">Релиз v0.4.1</span>
+  </div>
+  <div class="mt-auto pt-2 flex flex-wrap gap-2">
+    <a href="https://raidopert.github.io/KAteLeoPard/" class="inline-flex items-center gap-2 rounded-xl bg-[#E24B3B] hover:bg-[#c93f31] px-4 py-2.5 font-bold transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link size-4" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+      Открыть веб-версию
+    </a>
+    <a href="https://raidopert.github.io/KAteLeoPard/" class="inline-flex items-center gap-2 rounded-xl border border-[#E8B95C]/60 hover:bg-[#E8B95C]/10 px-4 py-2.5 font-bold transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download size-4" aria-hidden="true"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
+      Скачать на Android
+    </a>
+    <a href="https://raidopert.github.io/KAteLeoPard/" class="inline-flex items-center gap-2 rounded-xl border border-[#E8B95C]/60 hover:bg-[#E8B95C]/10 px-4 py-2.5 font-bold transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download size-4" aria-hidden="true"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>
+      Скачать на iPhone
+    </a>
+  </div>
+  <p class="text-xs text-[#F2E3CF]/60">Установка: Android — Chrome, меню ⋮ → «Установить приложение»; iPhone — Safari, «Поделиться» → «На экран „Домой“». Репозиторий и исходники: <a class="rps-a" href="https://github.com/Raidopert/KAteLeoPard" target="_blank" rel="noopener noreferrer">github.com/Raidopert/KAteLeoPard</a> · <a class="rps-a" href="https://github.com/Raidopert/KAteLeoPard/releases" target="_blank" rel="noopener noreferrer">все релизы</a></p>
+</article>

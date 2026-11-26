@@ -5,6 +5,9 @@
 Разработка и права: студия **Raidopert** ([raidopert.ru](https://raidopert.ru)).
 Лицензия — проприетарная, см. [LICENSE.txt](LICENSE.txt).
 
+**Веб-версия (PWA, ставится на телефон):** <https://raidopert.github.io/KAteLeoPard/>
+· [Релизы](https://github.com/Raidopert/KAteLeoPard/releases) · Карточка для сайта — [docs/site-card/README.md](docs/site-card/README.md)
+
 ---
 
 ## Что внутри (v0.4 — интерактивный прототип, всё бесплатно)

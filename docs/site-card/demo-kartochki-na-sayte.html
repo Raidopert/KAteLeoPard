@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Демо — карточка Kate Leopard на raidopert.ru</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Handjet:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#E8B95C;--gold-lt:#F4D489;--cream:#F2E3CF;--red:#E24B3B;--red-d:#c93f31}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,sans-serif;color:var(--cream);min-height:100vh;
+  background-color:#1c0618;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(112,48,98,.5) 0 18px, rgba(58,20,50,.5) 19px 24px, transparent 25px),
+    radial-gradient(circle at 34% 62%, rgba(96,40,84,.45) 0 22px, rgba(58,20,50,.45) 23px 28px, transparent 29px),
+    radial-gradient(circle at 78% 30%, rgba(112,48,98,.4) 0 20px, rgba(58,20,50,.4) 21px 26px, transparent 27px),
+    radial-gradient(circle at 90% 80%, rgba(96,40,84,.45) 0 24px, rgba(58,20,50,.45) 25px 30px, transparent 31px);
+  background-size:520px 520px,640px 640px,580px 580px,700px 700px;
+}
+.page{max-width:1024px;margin:0 auto;padding:0 16px}
+.topbar{display:flex;align-items:center;gap:10px;padding:16px 0}
+.topbar img{width:40px;height:40px;border-radius:12px;border:1px solid rgba(232,185,92,.4)}
+.brand{font-family:'Handjet',monospace;font-weight:700;font-size:20px;letter-spacing:.06em}
+main{padding-bottom:80px}
+#programs{border-top:1px solid rgba(232,185,92,.2);border-bottom:1px solid rgba(232,185,92,.2);background:rgba(42,9,35,.6);padding:56px 0;margin-top:24px}
+#programs h2{font-family:'Handjet',monospace;font-weight:700;font-size:clamp(30px,6vw,38px);letter-spacing:.04em;margin-bottom:8px}
+.rps-gold-text{background:linear-gradient(180deg,#F4D489 0%,#E8B95C 55%,#C98F3C 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+#programs>p.sub{opacity:.8;margin-bottom:32px}
+.grid{display:grid;gap:24px;grid-template-columns:1fr}
+@media(min-width:768px){.grid{grid-template-columns:1fr 1fr}}
+.rps-panel{background:rgba(61,13,51,.55);border:1px solid rgba(232,185,92,.28)}
+.card{border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.card .head{display:flex;align-items:center;gap:12px}
+.card .head img{width:48px;height:48px;border-radius:16px;border:1px solid rgba(232,185,92,.4);flex-shrink:0}
+.card h3{font-family:'Handjet',monospace;font-weight:700;font-size:24px;color:var(--gold);letter-spacing:.03em}
+.card .ver{font-size:12px;opacity:.6}
+.card p{opacity:.85;font-size:14.5px;line-height:1.55}
+.tags{display:flex;flex-wrap:wrap;gap:8px;font-size:12px}
+.tag{border-radius:999px;background:#2a0923;border:1px solid rgba(232,185,92,.3);padding:4px 10px}
+.btns{margin-top:auto;padding-top:8px;display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:10px 16px;font-weight:700;font-size:14px;text-decoration:none;transition:background .15s}
+.btn svg{width:16px;height:16px}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--red-d)}
+.btn-line{border:1px solid rgba(232,185,92,.6);color:var(--cream)}
+.btn-line:hover{background:rgba(232,185,92,.1)}
+.foot{font-size:12px;opacity:.6;margin-top:2px;line-height:1.5}
+.rps-a{color:var(--gold-lt);text-decoration:underline;text-underline-offset:3px}
+.rps-a:hover{color:#FFDF9E}
+.note{font-size:12px;opacity:.5;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <img src="https://raidopert.github.io/KAteLeoPard/icons/icon-48.png" alt="Логотип студии">
+    <span class="brand rps-gold-text">RAIDO PERT STUDIO</span>
+  </div>
+  <main>
+    <section id="programs" aria-labelledby="programs-title">
+      <h2 id="programs-title" class="rps-gold-text">ПРОГРАММЫ</h2>
+      <p class="sub">Не только игры — небольшие кошачьи приложения студии.</p>
+      <div class="grid">
+        <!-- ↓↓↓ начало вставляемого блока (kate-leopard-card.html) ↓↓↓ -->
+        <article class="rps-panel card">
+          <div class="head">
+            <img alt="Иконка Kate Leopard — карамельный леопард с большими глазами на розовом фоне" loading="lazy" width="48" height="48" src="https://raidopert.github.io/KAteLeoPard/icons/icon-192.png"/>
+            <div class="flex-col">
+              <h3>KATE LEOPARD</h3>
+              <span class="ver">Мягкое похудение · v0.4.1</span>
+            </div>
+          </div>
+          <p>Милое приложение для мягкого похудения: график веса с голубой «зоной воды» (в ПМС и овуляцию +1,5–2 кг — это гормоны, а не переедание), дневник на 10 секунд без калорий, механика «Я хочу съесть…» с заменами и наградами-лапками, пищевой портрет (тип фигуры, привычки, личные топы блюд), шаги, вода, сон и марафоны. Без регистрации: данные живут только на телефоне.</p>
+          <div class="tags">
+            <span class="tag">Приложение</span>
+            <span class="tag">Для девушек 18–40</span>
+            <span class="tag">Цикл + вес</span>
+            <span class="tag">Без регистрации</span>
+            <span class="tag">PWA · офлайн</span>
+            <span class="tag">Релиз v0.4.1</span>
+          </div>
+          <div class="btns">
+            <a href="https://raidopert.github.io/KAteLeoPard/" class="btn btn-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6"></path><path d="M10 14 21 3"></path><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>Открыть веб-версию</a>
+            <a href="https://raidopert.github.io/KAteLeoPard/" class="btn btn-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>Скачать на Android</a>
+            <a href="https://raidopert.github.io/KAteLeoPard/" class="btn btn-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg>Скачать на iPhone</a>
+          </div>
+          <p class="foot">Установка: Android — Chrome, меню ⋮ → «Установить приложение»; iPhone — Safari, «Поделиться» → «На экран „Домой“». Репозиторий и исходники: <a class="rps-a" href="https://github.com/Raidopert/KAteLeoPard" target="_blank" rel="noopener noreferrer">github.com/Raidopert/KAteLeoPard</a> · <a class="rps-a" href="https://github.com/Raidopert/KAteLeoPard/releases" target="_blank" rel="noopener noreferrer">все релизы</a></p>
+        </article>
+        <!-- ↑↑↑ конец вставляемого блока ↑↑↑ -->
+      </div>
+      <p class="note">Демо-страница для проверки карточки: стили повторяют живой raidopert.ru (панель rps-panel, золото, кнопки). На сайт вставляется только блок между комментариями.</p>
+    </section>
+  </main>
+</div>
+</body>
+</html>
