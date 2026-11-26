@@ -257,6 +257,7 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
       </div>
       <div class="card" id="magicCard"></div>
       <div class="card" id="moodCard"></div>
+      <div class="card" id="cravingCard"></div>
       <div class="card">
         <h3>🐾 Вес и «зона воды»</h3>
         <p class="note">Взвешивайся хотя бы через день. В жёлто-голубые дни цикла вес может «подпрыгнуть» на пару килограммов — это вода, а не жир, мур.</p>
@@ -268,6 +269,8 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
         <p id="wComment" class="hand"></p>
       </div>
       <div class="card" id="stepsCard"></div>
+      <div class="card" id="waterCard"></div>
+      <div class="card" id="planCard"></div>
       <div class="card">
         <h3>✨ Честный калькулятор 7700</h3>
         <p class="note">1 кг жира ≈ 7700 ккал. Переведём твою цель в еду — просто для наглядности, без запретов 🐾</p>
@@ -277,7 +280,7 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
         </div>
         <p id="res7700" class="note" style="margin-top:10px"></p>
       </div>
-      <p class="foot">Kate Leopard v0.2 · © 2026 Raidopert · raidopert.ru</p>
+      <p class="foot">Kate Leopard v0.3 · © 2026 Raidopert · raidopert.ru</p>
     </section>
 
     <!-- ДНЕВНИК -->
@@ -301,6 +304,7 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
 
     <!-- ПРОГУЛКА -->
     <section id="tab-walk" hidden>
+      <div class="card" id="pedCard"></div>
       <div class="card">
         <h3>🚶‍♀️ Японская ходьба (ИВТ)</h3>
         <p class="note">Интервальная быстрая ходьба: <b>3 минуты быстро → 3 минуты спокойно</b>, ×5 кругов = 30 минут. По исследованиям: +20% выносливости и −20% рисков «болезней образа жизни» за полгода.</p>
@@ -319,7 +323,7 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
         </div>
       </div>
       <div class="card" id="walkStats"></div>
-      <p class="foot">В прототипе шаги вводятся вручную. В приложении на телефон подключим Health Connect (Android) и HealthKit (iPhone) — шаги будут считаться сами.</p>
+      <p class="foot">Шагомер работает по датчику движения телефона 📱. В нативном приложении подключим Health Connect (Android) и HealthKit (iPhone) — точнее и экономнее по батарее.</p>
     </section>
 
     <!-- МАРАФОН -->
@@ -331,14 +335,14 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
       </div>
       <div class="card">
         <h3>🎁 Как это работает</h3>
-        <p class="note">Чек-ин каждый день: взвесилась, записала дневник или прошагала — засчитано. В конце — <b>настоящая медаль почтой</b> (или красивый цифровой бейдж). Платёж подключим через ЮKassa/СБП, в прототипе — демо-режим.</p>
+        <p class="note">Чек-ин каждый день: взвесилась, записала дневник или прошагала — засчитано. В конце — красивая цифровая медаль 🏅 <b>Все марафоны бесплатные</b>: монетизацию решим позже, когда спросим у вас, за что захочется платить.</p>
       </div>
     </section>
 
     <!-- СТАТИСТИКА -->
     <section id="tab-stats" hidden>
       <div id="statsBody"></div>
-      <p class="foot">Kate Leopard v0.2 · © 2026 Raidopert · raidopert.ru</p>
+      <p class="foot">Kate Leopard v0.3 · © 2026 Raidopert · raidopert.ru</p>
     </section>
   </main>
   <nav id="tabs">
@@ -357,12 +361,14 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
 const LSKEY='kateLeopard_v1';
 const DEFAULTS={onboarded:false,name:'',cycleLen:28,lastPeriod:'',goal:'',goalSteps:6000,
   weights:[],steps:{},diary:[],walks:0,marathon:{active:null,started:'',checkins:[]},
-  zodiac:'',zcustom:'',favColor:'#FF8FBF',moods:[],calc:{age:'',height:'',act:1.375},visits:0,lastVisit:''};
+  zodiac:'',zcustom:'',favColor:'#FF8FBF',moods:[],calc:{age:'',height:'',act:1.375},visits:0,lastVisit:'',
+  water:{},sleep:{},cravings:[],paws:0,goalWater:8,goalSleep:8,pace:'0.5',
+  reminder:{on:false,time:'20:00',last:''}};
 function loadData(){
   try{const raw=localStorage.getItem(LSKEY);
     if(raw){const p=JSON.parse(raw);
       return Object.assign({},DEFAULTS,p,{marathon:Object.assign({},DEFAULTS.marathon,p.marathon||{}),
-        calc:Object.assign({},DEFAULTS.calc,p.calc||{})});}
+        calc:Object.assign({},DEFAULTS.calc,p.calc||{}),reminder:Object.assign({},DEFAULTS.reminder,p.reminder||{})});}
   }catch(e){console.warn('load',e);}
   return JSON.parse(JSON.stringify(DEFAULTS));
 }
@@ -481,7 +487,7 @@ function renderSteps(){
       <button class="pillow small ghost" onclick="addSteps(500)">+500</button>
       <button class="pillow small ghost" onclick="addSteps(-500)">−500</button>
     </div>
-    <div class="smallnote">В прототипе шаги вводятся вручную — в мобильном приложении они будут считаться сами (Health Connect / HealthKit).</div>`;
+    <div class="smallnote">Шаги считает датчик во вкладке «Прогулка» (или добавь кнопками) — в мобильном приложении Health Connect / HealthKit подключатся сами.</div>`;
 }
 
 /* ================= дневник ================= */
@@ -622,19 +628,18 @@ function pawConfetti(){
 
 /* ================= марафоны ================= */
 const MARS={
-  soft:{n:'Мягкий марафон',days:14,price:199,d:'14 дней чек-инов + медаль'},
-  month:{n:'Месяц с котиком',days:30,price:299,d:'30 дней + медаль почтой'},
-  express:{n:'Экспресс-мур',days:7,price:149,d:'7 дней разгона + бейдж'}};
+  soft:{n:'Мягкий марафон',days:14,d:'14 дней чек-инов + медаль'},
+  month:{n:'Месяц с котиком',days:30,d:'30 дней + большая медаль'},
+  express:{n:'Экспресс-мур',days:7,d:'7 дней разгона + бейдж'}};
 function activityToday(){
   const t=today();
   return !!data.weights.find(w=>w.d===t)||data.diary.some(e=>e.d===t)||(data.steps[t]||0)>0;
 }
 function joinMar(key){
   const m=MARS[key];
-  modal(`<div class="mhead">${m.n} — ${m.price} ₽</div>
-    <p class="note">${m.days} дней чек-инов, прогресс-лапки и в конце — медалька. 
-    Платёж через ЮKassa/СБП подключим в следующей версии. В прототипе жми демо-кнопку 🐾</p>
-    <button class="pillow gold wide" onclick="activateMar('${key}')">Активировать (демо) 🏅</button>
+  modal(`<div class="mhead">${m.n} — бесплатно 🎉</div>
+    <p class="note">${m.days} дней чек-инов, прогресс-лапки и в конце — медалька. Всё бесплатно: платим только старанием 🐾</p>
+    <button class="pillow gold wide" onclick="activateMar('${key}')">Начать марафон 🏅</button>
     <button class="skip" onclick="closeModal()">Позже</button>`);
 }
 function activateMar(key){
@@ -661,9 +666,9 @@ function checkin(){
 function renderMarathon(){
   const el=$('marBody'),m=data.marathon;
   if(!m.active){
-    el.innerHTML=`<p class="note">Выбирай марафон — цены как у кофе с десертом, а пользы на месяц 🐾</p>`+
+    el.innerHTML=`<p class="note">Выбирай марафон — все бесплатные, а пользы на месяц 🎉</p>`+
       Object.entries(MARS).map(([k,v])=>`<div class="mcard"><div><h4>${v.n}</h4><div class="md">${v.d}</div></div>
-        <div style="text-align:right"><div class="price">${v.price} ₽</div>
+        <div style="text-align:right"><div class="price">Бесплатно</div>
         <button class="pillow small" style="margin-top:6px" onclick="joinMar('${k}')">Хочу!</button></div></div>`).join('')+
       `<div class="smallnote">С тобой идут 2 340 мур-котиков (в прототипе — демо-счётчик).</div>`;
     return;
@@ -756,6 +761,20 @@ function openSettings(){
     </select>
     <label class="lbl">Цель шагов в день</label>
     <input id="pfSteps" class="inp" type="number" inputmode="numeric" value="${data.goalSteps}">
+    <div class="kcrow">
+      <div><label class="lbl">Цель воды, стаканов</label><input id="pfWater" class="inp" type="number" inputmode="numeric" value="${data.goalWater}"></div>
+      <div><label class="lbl">Цель сна, ч</label><input id="pfSleep" class="inp" type="number" inputmode="numeric" value="${data.goalSleep}"></div>
+    </div>
+    <div class="kcrow">
+      <div><label class="lbl">Напоминание вечером</label>
+      <select id="pfRem" class="inp">
+        <option value="0"${!data.reminder.on?' selected':''}>выкл</option>
+        <option value="1"${data.reminder.on?' selected':''}>вкл</option>
+      </select></div>
+      <div><label class="lbl">Время напоминания</label><input id="pfRemTime" class="inp" type="time" value="${data.reminder.time}"></div>
+    </div>
+    <button class="pillow small ghost wide" style="margin-top:10px" onclick="testPush()">Проверить уведомления 🔔</button>
+    <div class="smallnote">Пока страница открыта — напомним в назначенное время, если дневник ещё пуст. В мобильном приложении будут настоящие push, даже когда всё закрыто.</div>
     <button class="pillow wide" style="margin-top:16px" onclick="saveProfile()">Сохранить 🐾</button>
     <p class="note" style="margin-top:14px"><b>Приватность.</b> Все данные живут только в памяти твоего телефона. Никаких почт, паролей и передач третьим лицам — только ты и котик 💗</p>
     <p class="note"><b>О студии.</b> Kate Leopard — продукт студии <b>Raidopert</b> · <a href="https://raidopert.ru" target="_blank" rel="noopener">raidopert.ru</a></p>
@@ -778,6 +797,11 @@ function saveProfile(){
   data.calc={age:$('pfAge').value.trim(),height:$('pfH').value.trim(),act:parseFloat($('pfAct').value)||1.375};
   const gs=parseInt($('pfSteps').value,10);
   if(gs>=1000&&gs<=30000)data.goalSteps=gs;
+  const gw=parseInt($('pfWater').value,10);
+  if(gw>=4&&gw<=15)data.goalWater=gw;
+  const gsL=parseInt($('pfSleep').value,10);
+  if(gsL>=6&&gsL<=12)data.goalSleep=gsL;
+  data.reminder={on:$('pfRem').value==='1',time:$('pfRemTime').value||'20:00',last:data.reminder.last||''};
   data.onboarded=true;save();closeModal();renderHome();
   toast('Сохранено, мур-р 💗');
 }
@@ -851,6 +875,9 @@ function renderHome(){
   renderSteps();
   renderMagic();
   renderMood();
+  renderCraving();
+  renderWater();
+  renderPlan();
 }
 
 /* ================= v0.2: тема, зодиак, гороскоп, комплименты ================= */
@@ -937,18 +964,24 @@ const MOOD_AI={
   2:['«Так себе» — это честно, а честность здесь ценится. Завтра будет мягче 🐾','Обними себя от котика. Плед и чай разрешены официально 💗'],
   1:['Держаться из последних — тоже подвиг, и ты его сегодня совершила 🐾','Ты большая молодец, что отметила. Погладь что-нибудь мягкое — работает лучше советов 💗']};
 function moodLabel(s){const m=MOODS.find(x=>x.s===s);return m?m.e+' '+m.t:'';}
+function sleepRow(){
+  if(data.sleep[today()])return'';
+  return`<div class="smallnote" style="margin-top:10px">А вчера сколько спалось? Сон — тайное оружие стройности 😴</div>
+    <div class="moodbtns" style="margin-top:6px">${[5,6,7,8,9,10].map(h=>`<div class="stk" onclick="saveSleep(${h})"><span class="se">${h>=9?'😴':h>=7?'😊':'🥱'}</span>${h} ч</div>`).join('')}</div>`;
+}
+function saveSleep(h){data.sleep[today()]=h;save();renderMood();toast('Сон записан, мур 😴');}
 function renderMood(){
   const el=$('moodCard');if(!el)return;
   const t=today(),ex=data.moods.find(m=>m.d===t);
   if(ex){
     el.innerHTML=`<h3>💬 Как продвигается?</h3>
       <p class="note">Сегодня ты уже ответила: <b>${moodLabel(ex.s)}</b> — ответ лежит в дневнике 🐾</p>
-      <button class="pillow small ghost" onclick="renderMood()">Изменить ответ</button>`;
+      <button class="pillow small ghost" onclick="renderMood()">Изменить ответ</button>${sleepRow()}`;
     return;
   }
   el.innerHTML=`<h3>💬 Как продвигается?</h3>
     <p class="note">Одно касание — и ответ аккуратно уедет в дневник 🐾</p>
-    <div class="moodbtns">${MOODS.map(m=>`<div class="stk" onclick="saveMood(${m.s})"><span class="se">${m.e}</span>${m.t}</div>`).join('')}</div>`;
+    <div class="moodbtns">${MOODS.map(m=>`<div class="stk" onclick="saveMood(${m.s})"><span class="se">${m.e}</span>${m.t}</div>`).join('')}</div>${sleepRow()}`;
 }
 function saveMood(s){
   const t=today(),ex=data.moods.find(m=>m.d===t);
@@ -1026,7 +1059,14 @@ const TIPS=[
   ['Стакан воды перед едой','Эффект скромный, но бесплатный: вода помогает съесть немного меньше и не путать «голод» с «жаждой».'],
   ['Маленькая тарелка и «среда победы»','Мы едим глазами: та же порция на маленькой тарелке кажется больше. Убери сладости с видного места — силу воли не понадобится: менять среду проще, чем себя.'],
   ['Регулярность бьёт жёсткость','Мягкие правила, которые ты соблюдаешь всегда, сильнее жёсткой диеты, которую срываешь: после срыва мозг включает «какая теперь разница» и добирает всё обратно. Правило Kate Leopard: вкусненькое можно, просто не всё и не каждый день.'],
-  ['Сравнивай вес по фазам цикла','Сравнивай вес с тем же днём прошлого цикла, а не со вчера: ПМС-вода до +2 кг может нарисовать «набор», которого не было. Приложение само подсвечивает эти дни голубой зоной на графике.']];
+  ['Сравнивай вес по фазам цикла','Сравнивай вес с тем же днём прошлого цикла, а не со вчера: ПМС-вода до +2 кг может нарисовать «набор», которого не было. Приложение само подсвечивает эти дни голубой зоной на графике.'],
+  ['🍽 Осознанное питание: 20 минут и без экрана','Сигнал о насыщении доходит до мозга примерно через 15–20 минут. Ешь медленнее, клади вилку между укусами — и наедаешься меньшим объёмом. Еда перед телефоном или телевизором = плюс сотни незаметных ккал.'],
+  ['🍳 Белковый завтрак','Завтрак с белком (яйца, творог, сыр) дольше держит сытость и снижает вечерний «жор». Пропущенный завтрак часто возвращается ночными набегами на холодильник.'],
+  ['🥤 Скрытые калории напитков и соусов','Сок, латте с сиропом и «чуть-чуть майонеза» легко дают 300–500 ккал, которые не вызывают сытости. Проверь напитки: часто там вся разница между удержанием и набором.'],
+  ['📺 Еда на автомате','«Доесть за сериалом» — самый незаметный способ переесть: внимание занято, а рука тянется сама. Правило: еда — за столом, сериал — отдельно.'],
+  ['🧠 Эмоциональный голод не лечится едой','Физический голод растёт постепенно и согласен на борщ. Эмоциональный — внезапный и требует строго конкретного тортик. Пауза 10 минут, вода, прогулка — и часто «голод» уходит сам.'],
+  ['🏋️‍♀️ Мышцы — печь калорий','Мышечная масса тратит энергию даже на диване. Два раза в неделю простые упражнения с весом тела (приседания, отжимания от опоры) держат обмен бодрым — особенно важно при похудении после 30.'],
+  ['📏 «Правило тарелки»','Половина тарелки — овощи, четверть — белок, четверть — гарнир. Не надо считать граммы: геометрия делает баланс за тебя.']];
 function renderStats(){
   const el=$('statsBody');if(!el)return;
   const t=today(),pts=data.weights;
@@ -1051,6 +1091,15 @@ function renderStats(){
   const mar=data.marathon.active?MARS[data.marathon.active]:null;
   const marDone=data.marathon.checkins.length;
   const top=topSticker();
+  const cr7=data.cravings.filter(c=>{const dd=diffDays(c.d,t);return dd>=0&&dd<7;});
+  const saved7=cr7.reduce((a,c)=>a+(c.saved||0),0);
+  const honest7=cr7.filter(c=>c.choice==='Осознанно съела').length;
+  const wT=data.water[t]||0;
+  const wKeys=Object.keys(data.water).filter(d=>{const dd=diffDays(d,t);return dd>=0&&dd<7;});
+  const wAvg=wKeys.length?(wKeys.reduce((a,k)=>a+data.water[k],0)/wKeys.length):null;
+  const sKeys=Object.keys(data.sleep).filter(d=>{const dd=diffDays(d,t);return dd>=0&&dd<7;});
+  const sAvg=sKeys.length?(sKeys.reduce((a,k)=>a+data.sleep[k],0)/sKeys.length):null;
+  const pn=v=>String(v).replace('.',',');
   el.innerHTML=`
   <div class="card">
     <h3>📊 Главные цифры</h3>
@@ -1123,18 +1172,268 @@ function renderStats(){
     <div id="kcOut" class="note" style="margin-top:10px"></div>
   </div>
   <div class="card">
-    <h3>📚 Наука о весе: 8 мягких способов самоконтроля</h3>
+    <h3>🏆 Награды за выбор</h3>
+    <div class="statgrid">
+      <div class="st"><b>${data.paws||0} 🐾</b><span>лапки мудрости всего</span></div>
+      <div class="st"><b>${cr7.length}</b><span>осознанных выборов за 7 дней</span></div>
+      <div class="st"><b>${saved7.toLocaleString('ru-RU')} ккал</b><span>сохранено заменами за 7 дней</span></div>
+      <div class="st"><b>≈ −${pn((saved7/7700).toFixed(2))} кг</b><span>та же польза в кг (формула 7700)</span></div>
+    </div>
+    <div class="smallnote">Здоровая замена +2 🐾, половинка и «вода-подожди» +1 🐾, осознанное «да» — без лапок, но с гордостью 💗 Таких было: ${honest7} за неделю.</div>
+  </div>
+  <div class="card">
+    <h3>💧 Вода и сон</h3>
+    <div class="statgrid">
+      <div class="st"><b>${wT}/${data.goalWater}</b><span>стаканов сегодня</span></div>
+      <div class="st"><b>${wAvg!==null?pn(wAvg.toFixed(1)):'—'}</b><span>вода, среднее за 7 дней</span></div>
+      <div class="st"><b>${sAvg!==null?pn(sAvg.toFixed(1))+' ч':'—'}</b><span>сон, среднее за 7 дней</span></div>
+      <div class="st"><b>${data.goalSleep} ч</b><span>твоя цель сна</span></div>
+    </div>
+    <div class="smallnote">${sAvg!==null&&sAvg<7?'Спишь меньше 7 часов — гормоны голода путаются, и тянет на сладкое. Ложись чуть раньше: это бесплатное похудение.':'Сон и вода — тихие герои похудения: держи их рядом 💗'}</div>
+  </div>
+  <div class="card">
+    <h3>📚 Наука о весе: 15 мягких способов самоконтроля</h3>
     <p class="note">Только то, что подтверждено исследованиями поведения и физиологии — без магии и жёстких диет. Это информация, а не медицинская рекомендация.</p>
     ${TIPS.map(x=>`<details class="tip"><summary>${x[0]}</summary><p>${x[1]}</p></details>`).join('')}
   </div>`;
   renderForecast();
 }
 
+/* ================= v0.3: вода, сон-цель, «хочу съесть», награды, план, шагомер, напоминания ================= */
+function renderWater(){
+  const el=$('waterCard');if(!el)return;
+  const t=today(),n=data.water[t]||0,g=data.goalWater;
+  const wKeys=Object.keys(data.water).filter(d=>{const dd=diffDays(d,t);return dd>=0&&dd<7;});
+  const wAvg=wKeys.length?(wKeys.reduce((a,k)=>a+data.water[k],0)/wKeys.length).toFixed(1).replace('.',','):null;
+  el.innerHTML=`<h3>💧 Вода</h3>
+    <div class="bigsteps" style="font-size:24px">${n} <span style="font-size:13px;color:var(--ink-soft)">/ ${g} стаканов</span></div>
+    <div style="font-size:17px;margin:6px 0;letter-spacing:2px">${'🥛'.repeat(Math.min(n,10))||'—'}</div>
+    <div class="wrow"><button class="pillow small" onclick="addWater(1)">+ стакан</button><button class="pillow small ghost" onclick="addWater(-1)">−</button></div>
+    <div class="smallnote">${wAvg?'Среднее за 7 дней: '+wAvg+' · ':''}Стакан воды перед едой — самый дешёвый помощник сытости.</div>`;
+}
+function addWater(d){
+  const t=today();data.water[t]=Math.max(0,(data.water[t]||0)+d);save();renderWater();
+  if(d>0&&data.water[t]===data.goalWater){toast('Цель по воде на сегодня выполнена! 💧🐾');pawConfetti();}
+  else if(d>0)toast('Стаканчик засчитан 💧');
+}
+/* --- «Я хочу съесть» --- */
+const CRAVINGS=[
+  {id:'shava',e:'🌯',n:'Шаверма',kcal:850,swaps:[
+    {e:'🌯',t:'Лаваш-ролл с курицей гриль и овощами',kcal:430},
+    {e:'🥗',t:'Половина порции + большой салат',kcal:500},
+    {e:'🍲',t:'Сначала тарелка супа — потом решить',kcal:280}]},
+  {id:'choc',e:'🍫',n:'Шоколадка',kcal:550,swaps:[
+    {e:'🍫',t:'2–3 квадратика вместо целой',kcal:120},
+    {e:'🍌',t:'Банан с чайной ложкой какао',kcal:110},
+    {e:'🥛',t:'Какао на молоке без сахара',kcal:150}]},
+  {id:'chips',e:'🍟',n:'Чипсы',kcal:540,swaps:[
+    {e:'🍿',t:'Воздушный попкорн без масла',kcal:180},
+    {e:'🥒',t:'Огуречные чипсы из духовки',kcal:90},
+    {e:'🧀',t:'Кубик сыра + орехи (20 г)',kcal:160}]},
+  {id:'pizza',e:'🍕',n:'Пицца',kcal:950,swaps:[
+    {e:'🍕',t:'Два куска вместо четырёх + салат',kcal:560},
+    {e:'🍅',t:'Лаваш-пицца с овощами',kcal:450},
+    {e:'🥣',t:'Сначала тарелка супа',kcal:280}]},
+  {id:'cola',e:'🥤',n:'Кола',kcal:210,swaps:[
+    {e:'🥤',t:'Кола без сахара',kcal:2},
+    {e:'🍋',t:'Вода с лимоном и льдом',kcal:5},
+    {e:'🍊',t:'Апельсин + газировка',kcal:70}]},
+  {id:'ice',e:'🍦',n:'Мороженое',kcal:280,swaps:[
+    {e:'🍦',t:'Мини-стаканчик вместо большого',kcal:120},
+    {e:'🫐',t:'Замороженные ягоды',kcal:70},
+    {e:'🥛',t:'Замороженный йогурт',kcal:130}]},
+  {id:'cake',e:'🍰',n:'Тортик',kcal:480,swaps:[
+    {e:'🍰',t:'Маленький кусочек, красиво на тарелке',kcal:180},
+    {e:'🍎',t:'Печёное яблоко с корицей',kcal:130},
+    {e:'🫐',t:'Ягоды с ложкой взбитых сливок',kcal:110}]},
+  {id:'burger',e:'🍔',n:'Бургер',kcal:750,swaps:[
+    {e:'🍔',t:'Куриный бургер вместо двойного',kcal:450},
+    {e:'🌯',t:'Ролл с курицей и овощами',kcal:430},
+    {e:'🍳',t:'Домашний бургер на лаваше',kcal:380}]},
+  {id:'pelmeni',e:'🥟',n:'Пельмени',kcal:620,swaps:[
+    {e:'🥟',t:'Половина порции + ложка сметаны',kcal:380},
+    {e:'🍜',t:'Куриный бульон с зеленью',kcal:220},
+    {e:'🍳',t:'Омлет с овощами',kcal:260}]},
+  {id:'fries',e:'🍟',n:'Картошка фри',kcal:450,swaps:[
+    {e:'🥔',t:'Запечённый картофель с паприкой',kcal:180},
+    {e:'🌽',t:'Овощи гриль',kcal:150},
+    {e:'🍟',t:'Мини-порция вместо большой',kcal:190}]},
+  {id:'rolls',e:'🍣',n:'Роллы',kcal:600,swaps:[
+    {e:'🍣',t:'Половина сета + мисо-суп',kcal:380},
+    {e:'🐟',t:'Сашими или рыба гриль',kcal:250},
+    {e:'🍙',t:'Онигири с лососем',kcal:230}]},
+  {id:'sausage',e:'🌭',n:'Сосиска в тесте',kcal:420,swaps:[
+    {e:'🥪',t:'Цельнозерновой сэндвич с курицей',kcal:280},
+    {e:'🍳',t:'Яйцо + лаваш',kcal:220},
+    {e:'🌽',t:'Кукуруза + кубик сыра',kcal:160}]}];
+let crState={item:null};
+function renderCraving(){
+  const el=$('cravingCard');if(!el)return;
+  const p=data.paws||0,last=data.cravings[0];
+  const t=today(),c7=data.cravings.filter(c=>{const dd=diffDays(c.d,t);return dd>=0&&dd<7;});
+  const s7=c7.reduce((a,c)=>a+(c.saved||0),0);
+  el.innerHTML=`<h3>🍩 Хочу съесть…</h3>
+    <p class="note">Сказать желанию «нельзя» — худший план. Выбери честно: замену, половинку или «осознанно да» — котик посчитает пользу и даст лапки 🐾</p>
+    <div class="chip">🐾 Лапки мудрости: ${p}</div>${s7>0?`<div class="chip">сохранено за неделю: ≈ ${s7.toLocaleString('ru-RU')} ккал</div>`:''}
+    ${last?`<div class="smallnote" style="margin-top:8px">Последний выбор: ${esc(last.it)} → ${esc(last.choice)}${last.saved>0?' (−'+last.saved+' ккал)':''}</div>`:''}
+    <button class="pillow" style="margin-top:10px" onclick="openCraving()">Выбрать желание 🍩</button>`;
+}
+function openCraving(){crState={item:null};cravingStep1();}
+function cravingStep1(){
+  modal(`<div class="mhead">Я хочу съесть… 🍩</div>
+    <p class="note">Честно и без вины: выбери желание — и котик покажет варианты с их пользой 🐾</p>
+    <div class="stgrid">${CRAVINGS.map(c=>`<div class="stk" onclick="cravingPick('${c.id}')"><span class="se">${c.e}</span>${c.n}</div>`).join('')}</div>
+    <label class="lbl">Своё желание</label>
+    <div class="wrow"><input id="crCustom" class="inp" placeholder="Например: бабушкин пирожок"><button class="pillow" onclick="cravingPickCustom()">Дальше</button></div>
+    <button class="skip" onclick="closeModal()">Позже</button>`);
+}
+function cravingPick(id){crState.item=CRAVINGS.find(c=>c.id===id);cravingStep2();}
+function cravingPickCustom(){
+  const v=$('crCustom').value.trim();
+  if(!v){toast('Напиши, чего хочется 🐾');return;}
+  crState.item={e:'🍩',n:v,kcal:400,custom:true};
+  cravingStep2();
+}
+function cravingStep2(){
+  const it=crState.item;
+  const swapRows=it.custom?[]:it.swaps;
+  modal(`<div class="mhead">${it.e} ${esc(it.n)} <span style="font-size:13px;color:var(--ink-soft)">~${it.kcal} ккал${it.custom?' (оценка)':''}</span></div>
+    <p class="note">Выбирай, что сделаешь на самом деле. Здесь нет неверных ответов — есть разная польза 🐾</p>
+    ${swapRows.map((s,i)=>`<div class="mcard"><div><h4>${s.e} ${esc(s.t)}</h4><div class="md">≈ ${s.kcal} ккал · сохранишь ≈ <b>${it.kcal-s.kcal} ккал</b> · +2 🐾</div></div>
+      <button class="pillow small" onclick="cravingChoice('swap',${i})">Так и сделаю</button></div>`).join('')}
+    <div class="mcard"><div><h4>✌️ Половинку</h4><div class="md">≈ ${Math.round(it.kcal/2)} ккал · сохранишь ≈ <b>${Math.round(it.kcal/2)} ккал</b> · +1 🐾</div></div>
+      <button class="pillow small" onclick="cravingChoice('half',0)">Так и сделаю</button></div>
+    <div class="mcard"><div><h4>💧 Вода и 10 минут</h4><div class="md">Часто «хочу есть» — это жажда. Передумаешь — не потеряешь ничего, кроме желания</div></div>
+      <button class="pillow small" onclick="cravingChoice('water',0)">Попробую</button></div>
+    <div class="mcard"><div><h4>💗 Осознанно съела, как хотела</h4><div class="md">Без вины и совещаний. Осознанность — тоже навык</div></div>
+      <button class="pillow small ghost" onclick="cravingChoice('honest',0)">Так и сделаю</button></div>
+    <button class="skip" onclick="cravingStep1()">← другое желание</button>`);
+}
+function cravingChoice(kind,i){
+  const it=crState.item;if(!it)return;
+  let label,saved,paws,ai;
+  if(kind==='swap'){const s=it.swaps[i];label=s.t;saved=it.kcal-s.kcal;paws=2;ai='Мирный договор с желанием: все довольны 🐾';}
+  else if(kind==='half'){label='Половинка';saved=Math.round(it.kcal/2);paws=1;ai='Половинка — это математика и свобода одновременно 💗';}
+  else if(kind==='water'){label='Вода и 10 минут';saved=0;paws=1;ai='Храброе решение: вода часто глушит желание 🐾';}
+  else{label='Осознанно съела';saved=0;paws=0;ai='Осознанность — тоже победа. Котик гордится тобой не меньше 💗';}
+  data.cravings.unshift({d:today(),it:it.e+' '+it.n,choice:label,saved:saved,paws:paws});
+  if(data.cravings.length>60)data.cravings=data.cravings.slice(0,60);
+  const prevPaws=data.paws||0;
+  data.paws=prevPaws+paws;
+  save();closeModal();renderHome();
+  if(saved>0)toast(`Польза: ≈ −${saved} ккал 🐾 +${paws} лапки`);
+  else if(paws>0)toast('+1 лапка за хитрость с водой 🐾');
+  else toast(ai);
+  const hit=[5,15,30,50].find(m=>prevPaws<m&&data.paws>=m);
+  if(hit){pawConfetti();medalModal('Лапки мудрости! 🐾',`У тебя уже ${data.paws} лапок за правильные выборы. Так держать, мудрая леопард-лапка 💗`);}
+}
+/* --- Твой мягкий план --- */
+function renderPlan(){
+  const el=$('planCard');if(!el)return;
+  const pts=data.weights,cur=pts.length?pts[pts.length-1].w:null;
+  const pace=parseFloat(data.pace)||0.5;
+  if(cur===null){
+    el.innerHTML=`<h3>🗺 Твой мягкий план</h3>
+      <p class="note">Запиши вес и цель в профиле — и котик соберёт личный путь: калории, шаги, вода и сон 🐾</p>`;
+    return;
+  }
+  let eta='';
+  const toLose=data.goal?+(cur-data.goal).toFixed(1):null;
+  if(data.goal&&toLose>0){
+    const weeks=Math.ceil(toLose/pace),d=new Date();d.setDate(d.getDate()+weeks*7);
+    eta=`Цель <b>${data.goal} кг</b> при темпе −${String(pace).replace('.',',')} кг/нед ≈ <b>${d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'})}</b> (${weeks} ${plural(weeks,['неделя','недели','недель'])}). `;
+  }else if(data.goal&&toLose<=0){eta='Цель уже достигнута — держим и гордимся! 🎉 ';}
+  else{eta='Поставь цель в профиле — и покажу дату, когда она твоя. ';}
+  let kcal='';
+  const age=parseInt(data.calc.age,10),h=parseFloat(data.calc.height);
+  if(age&&h&&cur){
+    const bmr=Math.round(10*cur+6.25*h-5*age-161),tdee=Math.round(bmr*(data.calc.act||1.375));
+    const tgt=Math.max(1200,tdee-Math.round(pace*1100));
+    kcal=`Калории: ≈ <b>${tgt.toLocaleString('ru-RU')} ккал</b>/день (не ниже 1200!). `;
+  }
+  el.innerHTML=`<h3>🗺 Твой мягкий план</h3>
+    <p class="note">${eta}${kcal}Шаги: <b>${data.goalSteps.toLocaleString('ru-RU')}</b>/день · Вода: <b>${data.goalWater}</b> стаканов · Сон: <b>${data.goalSleep} ч</b> · Дневник — 10 секунд.</p>
+    <p class="note">Правило тренда: сравнивай вес раз в неделю, в одну и ту же фазу цикла. В «зоне воды» цифры врут — а ты нет 🐾</p>
+    <div class="wrow"><select id="planPace" class="inp" onchange="setPace(this.value)">
+      <option value="0.25"${pace==0.25?' selected':''}>темп −0,25 кг/нед (самый мягкий)</option>
+      <option value="0.5"${pace==0.5?' selected':''}>темп −0,5 кг/нед</option>
+      <option value="0.75"${pace==0.75?' selected':''}>темп −0,75 кг/нед</option>
+    </select></div>`;
+}
+function setPace(v){data.pace=v;save();renderPlan();toast('План обновлён, мур 🐾');}
+/* --- Шагомер (датчик движения) --- */
+let ped={on:false,steps:0,events:0,last:0};
+function renderPed(){
+  const el=$('pedCard');if(!el)return;
+  const todaySteps=data.steps[today()]||0;
+  el.innerHTML=`<h3>📱 Шагомер</h3>
+    <div class="bigsteps">${todaySteps.toLocaleString('ru-RU')} <span style="font-size:14px;color:var(--ink-soft)">сегодня</span></div>
+    ${ped.on?`<div class="note" style="margin-top:6px">Датчик считает: <b id="pedLive">${ped.steps}</b> шагов</div>
+      <div class="wrow"><button class="pillow gold" onclick="pedStop(true)">Стоп — записать ${ped.steps} шагов</button></div>`
+      :`<div class="wrow" style="margin-top:6px"><button class="pillow" onclick="pedToggle()">▶ Включить шагомер</button></div>`}
+    <div class="smallnote">Работает в браузере телефона (Chrome/Safari) по датчику движения. Если датчик молчит — добавь шаги кнопками во вкладке «Дом».</div>`;
+}
+function pedToggle(){
+  if(ped.on){pedStop(true);return;}
+  if(!('DeviceMotionEvent' in window)){toast('Здесь нет датчика движения — добавь шаги кнопками 🐾');return;}
+  if(typeof DeviceMotionEvent.requestPermission==='function'){
+    DeviceMotionEvent.requestPermission().then(s=>{if(s==='granted')pedStart();else toast('Датчик запрещён в настройках — шаги можно добавить кнопками 🐾');})
+      .catch(()=>toast('Датчик недоступен — шаги можно добавить кнопками 🐾'));
+  }else pedStart();
+}
+function pedStart(){
+  ped={on:true,steps:0,events:0,last:0};
+  window.addEventListener('devicemotion',pedMotion,false);
+  renderPed();
+  toast('Шагомер включён — носи телефон с собой 🐾');
+  setTimeout(()=>{if(ped.on&&ped.events===0){toast('Датчик молчит на этом устройстве — шаги можно добавить кнопками 🐾');pedStop(false);}},4000);
+}
+function pedMotion(ev){
+  const a=ev.accelerationIncludingGravity;
+  if(!a||a.x===null||a.x===undefined)return;
+  ped.events++;
+  const m=Math.sqrt(a.x*a.x+a.y*a.y+a.z*a.z),now=Date.now();
+  if(m>11.5&&now-ped.last>300){
+    ped.steps++;ped.last=now;
+    const e=$('pedLive');if(e)e.textContent=ped.steps;
+    const btn=document.querySelector('#pedCard .pillow.gold');if(btn)btn.textContent='Стоп — записать '+ped.steps+' шагов';
+  }
+}
+function pedStop(count){
+  window.removeEventListener('devicemotion',pedMotion,false);
+  const n=ped.steps;ped={on:false,steps:0,events:0,last:0};
+  renderPed();
+  if(count&&n>0){const t=today();data.steps[t]=(data.steps[t]||0)+n;save();renderHome();toast(`+${n} шагов от датчика 🐾`);}
+}
+/* --- Напоминания --- */
+function testPush(){
+  if(!('Notification' in window)){toast('Этот браузер не умеет уведомления — в мобильном приложении будут настоящие пуши 🐾');return;}
+  Notification.requestPermission().then(p=>{
+    if(p==='granted'){
+      toast('Уведомления включены, мур! 💗');
+      try{new Notification('Kate Leopard 🐾',{body:'Котик будет напоминать про вечерний чек-ин 💗'});}catch(e){}
+    }else toast('Пуши запрещены в браузере — напомню тостами, пока приложение открыто 🐾');
+  });
+}
+function reminderTick(){
+  if(!data.reminder.on)return;
+  const now=new Date();
+  const hm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  if(hm!==data.reminder.time||data.reminder.last===today())return;
+  data.reminder.last=today();save();
+  if(data.diary.some(e=>e.d===today()))return;
+  const msg='Вечерний чек-ин: одна строчка в дневник — и спокойный сон 🐾';
+  toast('💗 '+msg);
+  if('Notification' in window&&Notification.permission==='granted'){
+    try{new Notification('Kate Leopard 🐾',{body:msg});}catch(e){}
+  }
+}
+
 /* ================= вкладки ================= */
 function goTab(name){
   document.querySelectorAll('main section').forEach(s=>s.hidden=s.id!=='tab-'+name);
   document.querySelectorAll('.tabbtn').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
-  if(name==='walk')renderWalkStats();
+  if(name==='walk'){renderWalkStats();renderPed();}
   if(name==='marathon')renderMarathon();
   if(name==='diary')renderDiary();
   if(name==='stats')renderStats();
@@ -1156,6 +1455,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(!data.onboarded)setTimeout(openOnboarding,3100);
   setTimeout(hideSplash,2800);
   setTimeout(()=>toast('💗 '+visitCompliment(pause)),3400);
+  setInterval(reminderTick,30000);
 });
 </script>
 </body>
