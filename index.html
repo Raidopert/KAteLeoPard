@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kate Leopard — мягкое похудение 🐾 | Raidopert</title>
-<meta name="description" content="Kate Leopard — милое приложение для мягкого похудения: вес с учётом цикла, шаги, дневник без калорий, пищевой портрет и марафоны. © Raidopert · raidopert.ru">
+<title>Kate Leopard — мягкое похудение для тинов и девушек 🐾 | Raidopert</title>
+<meta name="description" content="Kate Leopard — милое приложение для мягкого похудения для тинов (13–17) и девушек: вес с учётом цикла, шаги, дневник без калорий, пищевой портрет и марафоны. © Raidopert · raidopert.ru">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FF8FBF">
 <link rel="icon" href="icons/favicon.ico" sizes="any">
@@ -36,7 +36,7 @@ body{
   box-shadow:0 0 60px rgba(238,120,168,.25);display:flex;flex-direction:column;position:relative;overflow:hidden}
 /* ---------- шапка ---------- */
 header{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 6px;position:relative}
-.greet{font-family:'Comfortaa',cursive;font-weight:700;font-size:clamp(18px,5vw,22px);color:var(--pink-deep)}
+.greet{font-family:'Comfortaa','Nunito',sans-serif;font-weight:700;font-size:clamp(18px,5vw,22px);color:var(--pink-deep)}
 .dateline{font-size:13px;color:var(--ink-soft);margin-top:2px}
 .gear{border:none;background:#fff;border-radius:18px;width:42px;height:42px;font-size:19px;cursor:pointer;
   box-shadow:var(--shadow);transition:transform .15s}
@@ -45,7 +45,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 main{flex:1;padding:14px 16px 118px}
 .card{background:var(--card);border-radius:26px;padding:18px;box-shadow:var(--shadow);
   border:1.5px solid #FFE0EC;margin-bottom:16px;position:relative;overflow:hidden}
-.card h3{font-family:'Comfortaa',cursive;font-size:16.5px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.card h3{font-family:'Comfortaa','Nunito',sans-serif;font-size:16.5px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .note{font-size:13.5px;color:var(--ink-soft);line-height:1.45;margin-bottom:10px}
 .hand{font-family:'Caveat',cursive;font-size:21px;line-height:1.25;color:var(--pink-deep);margin-top:8px}
 .hint{font-size:13.5px;color:var(--ink-soft);text-align:center;padding:14px 6px}
@@ -59,27 +59,49 @@ main{flex:1;padding:14px 16px 118px}
 select.inp{appearance:none}
 textarea.inp{resize:vertical;min-height:52px;margin-top:10px}
 .lbl{display:block;font-size:13px;font-weight:800;color:var(--ink-soft);margin:12px 0 5px}
-/* ---------- кнопки-подушки ---------- */
+/* ---------- кнопки-подушки (v0.5: пушистые, с текстурой пуха) ---------- */
 .pillow{
-  border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:#7A2F52;
-  background:linear-gradient(180deg,var(--btn1) 0%,var(--btn2) 55%,var(--btn3) 100%);
-  border-radius:28px;padding:14px 24px;position:relative;
+  border:2px solid rgba(255,255,255,.55);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:15px;color:#7A2F52;
+  background-color:var(--btn2);
+  background-image:linear-gradient(180deg,rgba(255,255,255,.62) 0%,rgba(255,255,255,.1) 48%,rgba(var(--sd),.2) 100%),url(sprites/fluff-tex-2.jpg);
+  background-size:auto,175px;background-blend-mode:soft-light,normal;
+  border-radius:30px;padding:14px 24px;position:relative;
   box-shadow:inset 0 8px 14px rgba(255,255,255,.75),inset 0 -10px 16px rgba(var(--sd),.28),
     0 0 0 5px rgba(255,255,255,.4),0 10px 22px rgba(var(--sc),.35),0 2px 6px rgba(var(--sc),.25);
   transition:transform .12s,box-shadow .12s;white-space:nowrap}
-.pillow:hover{transform:translateY(-1px)}
+.pillow:hover{transform:translateY(-1px) rotate(-.4deg)}
 .pillow:active{transform:translateY(3px) scale(.97);
   box-shadow:inset 0 6px 10px rgba(var(--sd),.3),inset 0 4px 8px rgba(255,255,255,.5),0 0 0 4px rgba(255,255,255,.35),0 4px 10px rgba(var(--sc),.3)}
-.pillow.gold{background:linear-gradient(180deg,#FFE9AE 0%,#F7C964 55%,#EDB44A 100%);color:#7A4A12;
+.pillow.gold{background-color:#F7C964;color:#7A4A12;
+  background-image:linear-gradient(180deg,#FFE9AE 0%,#F7C964 55%,#EDB44A 100%),url(sprites/fluff-tex-3.jpg);
+  background-size:auto,175px;background-blend-mode:soft-light,normal;
   box-shadow:inset 0 8px 14px rgba(255,255,255,.75),inset 0 -10px 16px rgba(186,132,38,.3),
     0 0 0 5px rgba(255,255,255,.4),0 10px 22px rgba(220,160,60,.4),0 2px 6px rgba(220,160,60,.3)}
-.pillow.ghost{background:#fff;color:var(--pink-deep);border:2px solid var(--pink-line);
+.pillow.ghost{background-color:#fff;background-image:url(sprites/fluff-tex-1.jpg);background-size:150px;
+  background-blend-mode:soft-light;color:var(--pink-deep);border:2px solid var(--pink-line);
   box-shadow:0 6px 16px rgba(var(--sc),.22)}
 .pillow.small{padding:9px 16px;font-size:13.5px;border-radius:22px}
 .pillow.wide{width:100%;justify-content:center}
 .filebtn{display:flex;align-items:center;justify-content:center;cursor:pointer}
 .skip{display:block;margin:12px auto 0;background:none;border:none;color:var(--ink-soft);
   font:inherit;font-size:13px;text-decoration:underline;cursor:pointer}
+/* ---------- v0.5: пух-спрайты ---------- */
+.tabbtn.active{background-color:var(--btn3);
+  background-image:linear-gradient(180deg,var(--btn1),var(--btn3)),url(sprites/fluff-tex-2.jpg);
+  background-size:auto,170px;background-blend-mode:soft-light,normal}
+.toast{background-color:var(--btn3);
+  background-image:linear-gradient(180deg,var(--btn1),var(--btn3)),url(sprites/fluff-tex-2.jpg);
+  background-size:auto,150px;background-blend-mode:soft-light,normal}
+.peeker{position:absolute;right:10px;top:-4px;width:76px;pointer-events:none;
+  filter:drop-shadow(0 8px 14px rgba(var(--sc),.35));animation:bob 4.5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:rotate(5deg) translateY(0)}50%{transform:rotate(2deg) translateY(-6px)}}
+.spimg{display:inline-block;height:1.4em;vertical-align:-.35em;filter:drop-shadow(0 3px 6px rgba(var(--sc),.25))}
+.emptyart{text-align:center;margin:4px 0 8px}
+.emptyart img{width:130px;filter:drop-shadow(0 8px 16px rgba(var(--sc),.22))}
+.boom{position:fixed;inset:0;z-index:78;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.boom img{width:min(66vw,310px);filter:drop-shadow(0 12px 30px rgba(214,86,138,.45));animation:pop .16s ease}
+.agechip{display:inline-flex;align-items:center;justify-content:center;min-width:52px;background:#fff;border:2px solid var(--pink-line);border-radius:18px;padding:8px 12px;font-weight:800;font-size:14px;cursor:pointer;color:var(--ink)}
+.agechip.sel{border-color:var(--gold);background:#FFF7E4}
 /* ---------- золотые блёстки ---------- */
 .glitter{background:linear-gradient(120deg,#B8860B,#FFD86B 30%,#FFF3B0 50%,#F5C542 70%,#C9922E);
   -webkit-background-clip:text;background-clip:text;color:transparent;
@@ -100,10 +122,10 @@ textarea.inp{resize:vertical;min-height:52px;margin-top:10px}
 @keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
 .sp-paw{width:64px;height:64px;color:#fff;filter:drop-shadow(0 6px 14px rgba(214,86,138,.5));animation:pawpulse 2s ease-in-out infinite;margin-bottom:14px}
 @keyframes pawpulse{0%,100%{transform:scale(1) rotate(-6deg)}50%{transform:scale(1.12) rotate(6deg)}}
-.sp-studio{font-family:'Comfortaa',cursive;font-weight:700;font-size:clamp(30px,9vw,44px);letter-spacing:.18em}
+.sp-studio{font-family:'Comfortaa','Nunito',sans-serif;font-weight:700;font-size:clamp(30px,9vw,44px);letter-spacing:.18em}
 .sp-sub{font-size:13px;color:#8A4A66;margin-top:6px;letter-spacing:.06em}
 .sp-presents{font-family:'Caveat',cursive;font-size:24px;color:#B05577;margin:26px 0 4px}
-.sp-app{font-family:'Comfortaa',cursive;font-weight:700;font-size:clamp(34px,10vw,50px);color:#fff;
+.sp-app{font-family:'Comfortaa','Nunito',sans-serif;font-weight:700;font-size:clamp(34px,10vw,50px);color:#fff;
   text-shadow:0 4px 18px rgba(214,86,138,.55)}
 .sp-tag{font-size:14.5px;color:#8A4A66;margin-top:8px}
 .sp-copy{position:absolute;bottom:18px;font-size:11.5px;color:#9A5A78;text-align:center;width:100%}
@@ -125,7 +147,7 @@ textarea.inp{resize:vertical;min-height:52px;margin-top:10px}
 .paws svg{width:26px;height:26px;color:var(--pink-line)}
 .paws svg.full{color:var(--pink-deep)}
 .paws svg.today{color:var(--gold)}
-.bigsteps{font-family:'Comfortaa',cursive;font-size:30px;font-weight:700;color:var(--pink-deep)}
+.bigsteps{font-family:'Comfortaa','Nunito',sans-serif;font-size:30px;font-weight:700;color:var(--pink-deep)}
 .smallnote{font-size:11.5px;color:var(--ink-soft);margin-top:6px}
 /* ---------- дневник ---------- */
 .stgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px;margin-top:4px}
@@ -147,17 +169,17 @@ textarea.inp{resize:vertical;min-height:52px;margin-top:10px}
 .ringbg{fill:none;stroke:var(--pink-soft);stroke-width:12}
 .ringfg{fill:none;stroke:url(#ringGrad);stroke-width:12;stroke-linecap:round;
   stroke-dasharray:440;stroke-dashoffset:440;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .3s}
-.walkstate{position:absolute;top:56px;width:100%;text-align:center;font-family:'Comfortaa',cursive;font-weight:700;font-size:16px;color:var(--pink-deep)}
-.walktime{position:absolute;top:82px;width:100%;text-align:center;font-family:'Comfortaa',cursive;font-weight:700;font-size:30px;color:var(--ink)}
+.walkstate{position:absolute;top:56px;width:100%;text-align:center;font-family:'Comfortaa','Nunito',sans-serif;font-weight:700;font-size:16px;color:var(--pink-deep)}
+.walktime{position:absolute;top:82px;width:100%;text-align:center;font-family:'Comfortaa','Nunito',sans-serif;font-weight:700;font-size:30px;color:var(--ink)}
 .walkround{position:absolute;top:124px;width:100%;text-align:center;font-size:12.5px;color:var(--ink-soft);font-weight:800}
 #tab-walk.hot .card:first-child{background:linear-gradient(180deg,#FFF1F7,#FFDFEC)}
 /* ---------- марафон ---------- */
 .pbar{height:16px;background:var(--pink-soft);border-radius:10px;overflow:hidden;margin:8px 0 4px;box-shadow:inset 0 2px 5px rgba(var(--sd),.18)}
 .pfill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--btn3),#E9B94C 85%,#FFD86B);transition:width .4s;box-shadow:inset 0 2px 4px rgba(255,255,255,.5)}
 .mcard{background:#fff;border:2px solid var(--pink-line);border-radius:24px;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.mcard h4{font-family:'Comfortaa',cursive;font-size:15px;color:var(--ink)}
+.mcard h4{font-family:'Comfortaa','Nunito',sans-serif;font-size:15px;color:var(--ink)}
 .mcard .md{font-size:12px;color:var(--ink-soft);margin-top:2px}
-.price{font-family:'Comfortaa',cursive;font-weight:700;color:var(--gold-deep);white-space:nowrap}
+.price{font-family:'Comfortaa','Nunito',sans-serif;font-weight:700;color:var(--gold-deep);white-space:nowrap}
 .medalbox{display:flex;align-items:center;gap:12px;margin-top:10px}
 .medalbox svg{width:64px;height:64px;filter:drop-shadow(0 6px 12px rgba(201,146,46,.45))}
 /* ---------- тосты, модалки, конфетти ---------- */
@@ -170,7 +192,7 @@ textarea.inp{resize:vertical;min-height:52px;margin-top:10px}
 @keyframes mup{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
 @media(min-width:560px){.backdrop{align-items:center}.mwin{border-radius:30px}}
 .mclose{position:absolute;top:14px;right:16px;border:none;background:#FFE4EF;border-radius:50%;width:32px;height:32px;font-size:15px;cursor:pointer;color:var(--ink)}
-.mhead{font-family:'Comfortaa',cursive;font-size:19px;font-weight:700;color:var(--pink-deep);margin-bottom:10px}
+.mhead{font-family:'Comfortaa','Nunito',sans-serif;font-size:19px;font-weight:700;color:var(--pink-deep);margin-bottom:10px}
 .pawconfetti{position:fixed;top:-30px;font-size:22px;z-index:75;pointer-events:none;animation:fall 2.2s ease-in forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(340deg);opacity:.6}}
 /* ---------- прочее ---------- */
@@ -189,7 +211,7 @@ textarea.inp{resize:vertical;min-height:52px;margin-top:10px}
 @media(min-width:430px){.moodbtns{grid-template-columns:repeat(4,1fr)}}
 .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .st{background:#fff;border-radius:20px;padding:12px 14px;border:1.5px solid #FFE0EC;box-shadow:0 4px 12px rgba(var(--sc),.12)}
-.st b{font-family:'Comfortaa',cursive;font-size:19px;color:var(--pink-deep);display:block;line-height:1.2}
+.st b{font-family:'Comfortaa','Nunito',sans-serif;font-size:19px;color:var(--pink-deep);display:block;line-height:1.2}
 .st span{font-size:11px;color:var(--ink-soft)}
 .mweek{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:18px;padding:8px 14px;border:1.5px solid #FFE0EC}
 details.tip{background:#fff;border:1.5px solid var(--pink-line);border-radius:18px;padding:11px 14px;margin-bottom:8px}
@@ -237,12 +259,15 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
   <svg class="spark s2"><use href="#spark"/></svg>
   <svg class="spark s3"><use href="#spark"/></svg>
   <div class="sp-inner">
-    <svg class="sp-paw"><use href="#paw"/></svg>
+    <svg class="sp-paw" style="display:none"><use href="#paw"/></svg>
+    <img src="sprites/fluff-cloud-96.png" alt="Пушистый котик-облако Kate Leopard"
+      style="width:128px;filter:drop-shadow(0 10px 24px rgba(214,86,138,.5));animation:pawpulse 2s ease-in-out infinite;margin-bottom:12px"
+      onerror="this.style.display='none';document.querySelector('.sp-paw').style.display='block'">
     <div class="sp-studio glitter">RAIDOPERT</div>
     <div class="sp-sub">студия мобильных приложений · raidopert.ru</div>
     <div class="sp-presents">представляет</div>
     <h1 class="sp-app">Kate <span class="glitter">Leopard</span></h1>
-    <div class="sp-tag">мягкое похудение для девушек 🐾</div>
+    <div class="sp-tag">мягкое похудение · для тинов и девушек 🐾</div>
   </div>
   <div class="sp-copy">© 2026 Raidopert · raidopert.ru · все права защищены</div>
 </div>
@@ -260,6 +285,7 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
     <section id="tab-home">
       <div class="card" id="cycleCard">
         <svg class="spark s1"><use href="#spark"/></svg>
+        <img class="peeker" src="sprites/fluff-cloud-96.png" alt="" onerror="this.style.display='none'">
         <div id="cycleBody"></div>
       </div>
       <div class="card" id="magicCard"></div>
@@ -280,14 +306,14 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
       <div class="card" id="planCard"></div>
       <div class="card">
         <h3>✨ Честный калькулятор 7700</h3>
-        <p class="note">1 кг жира ≈ 7700 ккал. Переведём твою цель в еду — просто для наглядности, без запретов 🐾</p>
+        <p class="note" id="note7700">1 кг жира ≈ 7700 ккал. Переведём твою цель в еду — просто для наглядности, без запретов 🐾</p>
         <div class="wrow">
           <input id="kcal7700" class="inp" type="number" step="0.5" min="0.5" max="50" inputmode="decimal" placeholder="Сколько кг хочется скинуть">
           <button class="pillow gold" onclick="calc7700()">Перевести</button>
         </div>
         <p id="res7700" class="note" style="margin-top:10px"></p>
       </div>
-      <p class="foot">Kate Leopard v0.4 · © 2026 Raidopert · raidopert.ru</p>
+      <p class="foot">Kate Leopard v0.5 · © 2026 Raidopert · raidopert.ru</p>
     </section>
 
     <!-- ДНЕВНИК -->
@@ -349,7 +375,7 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
     <!-- СТАТИСТИКА -->
     <section id="tab-stats" hidden>
       <div id="statsBody"></div>
-      <p class="foot">Kate Leopard v0.4 · © 2026 Raidopert · raidopert.ru</p>
+      <p class="foot">Kate Leopard v0.5 · © 2026 Raidopert · raidopert.ru</p>
     </section>
   </main>
   <nav id="tabs">
@@ -364,9 +390,9 @@ details.tip p{font-size:13px;color:var(--ink-soft);margin-top:6px;line-height:1.
 <div id="modal-root"></div>
 <script>
 'use strict';
-/* ================= Kate Leopard v0.4 · © Raidopert · raidopert.ru ================= */
+/* ================= Kate Leopard v0.5 · © Raidopert · raidopert.ru ================= */
 const LSKEY='kateLeopard_v1';
-const DEFAULTS={onboarded:false,name:'',cycleLen:28,lastPeriod:'',goal:'',goalSteps:6000,
+const DEFAULTS={onboarded:false,name:'',age:0,cycleLen:28,lastPeriod:'',goal:'',goalSteps:6000,
   weights:[],steps:{},diary:[],walks:0,marathon:{active:null,started:'',checkins:[]},
   zodiac:'',zcustom:'',favColor:'#FF8FBF',moods:[],calc:{age:'',height:'',act:1.375},visits:0,lastVisit:'',
   water:{},sleep:{},cravings:[],paws:0,goalWater:8,goalSleep:8,pace:'0.5',
@@ -389,6 +415,9 @@ function diffDays(a,b){return Math.round((parseD(b)-parseD(a))/864e5);}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function ruDate(s){return parseD(s).toLocaleDateString('ru-RU',{day:'numeric',month:'short'});}
 function $(id){return document.getElementById(id);}
+/* --- v0.5: возраст и подростковый режим (13–17) --- */
+function isTeen(){return data.age>=13&&data.age<=17;}
+const TEEN_NOTE='🌿 Тебе меньше 18 — включён мягкий подростковый режим: без дефицитов и гонки за весом. Организм ещё растёт, поэтому заметные изменения веса — только с врачом и родителями. Прогулки, вода, дневник, лапки и мур-поддержка — полностью твои 🐾';
 
 /* ================= цикл и «зона воды» ================= */
 function cycleDay(){
@@ -535,7 +564,7 @@ function saveDiary(){
 }
 function renderDiary(){
   const el=$('dHist');
-  if(!data.diary.length){el.innerHTML='<div class="hint">Пока пусто. Первый день — самый важный 🐾</div>';return;}
+  if(!data.diary.length){el.innerHTML='<div class="emptyart"><img src="sprites/kw-cloudrain.png" alt="" onerror="this.style.display=\'none\'"><div class="hint">Пока пусто. Первый день — самый важный 🐾</div></div>';return;}
   el.innerHTML=data.diary.slice(0,10).map(e=>{
     const st=STICKERS.find(s=>s.id===e.sid);
     const md=(e.sid&&String(e.sid).indexOf('mood:')===0)?MOODS.find(m=>m.s===+String(e.sid).slice(5)):null;
@@ -611,7 +640,7 @@ function walkFinish(early){
   const t=today();
   data.steps[t]=(data.steps[t]||0)+Math.round(mins*120);
   save();renderHome();renderWalkStats();
-  if(finished){pawConfetti();medalModal('Прогулка завершена!','30 минут ИВТ — отличная работа, лапочка! +3600 шагов уже в твоём дневчике 🐾');}
+  if(finished){puffBoom();pawConfetti();medalModal('Прогулка завершена!','30 минут ИВТ — отличная работа, лапочка! +3600 шагов уже в твоём дневчике 🐾');}
   else toast('Прогулка сохранена: ~'+mins+' мин 💗');
 }
 function renderWalkStats(){
@@ -632,6 +661,19 @@ function pawConfetti(){
     document.body.appendChild(s);
     setTimeout(()=>s.remove(),3200);
   }
+}
+/* v0.5: взрыв пуха — 5 кадров спрайт-листа */
+function puffBoom(){
+  try{
+    const b=document.createElement('div');b.className='boom';
+    b.innerHTML='<img src="sprites/puff-f1.png" alt="">';
+    document.body.appendChild(b);
+    let i=1;
+    const t=setInterval(()=>{
+      if(i>=5){clearInterval(t);setTimeout(()=>b.remove(),300);return;}
+      b.innerHTML='<img src="sprites/puff-f'+(i+1)+'.png" alt="">';i++;
+    },130);
+  }catch(e){}
 }
 
 /* ================= марафоны ================= */
@@ -667,7 +709,7 @@ function checkin(){
   if(!m.active||m.checkins.includes(today()))return;
   if(!activityToday()){toast('Сначала маленькое дело: взвесься, запиши дневник или добавь шаги 🐾');return;}
   m.checkins.push(today());save();renderMarathon();
-  if(m.checkins.length>=def.days){pawConfetti();medalModal('МЕДАЛЬ ТВОЯ! 🏅',`«${def.n}» пройден полностью! ${m.checkins.length} чек-инов — ты настоящая леопард-лапка. Медаль уже мурчит на полке 💗`);}
+  if(m.checkins.length>=def.days){puffBoom();pawConfetti();medalModal('МЕДАЛЬ ТВОЯ! 🏅',`«${def.n}» пройден полностью! ${m.checkins.length} чек-инов — ты настоящая леопард-лапка. Медаль уже мурчит на полке 💗`);}
   else if(m.checkins.length%7===0){pawConfetti();toast(`Серебряная лапка за ${m.checkins.length} дней! 🥈`);}
   else toast('Чек-ин засчитан, мур-р 💗');
 }
@@ -686,7 +728,7 @@ function renderMarathon(){
   const done=m.checkins.length,checked=m.checkins.includes(today());
   const pct=Math.round(done/def.days*100);
   const finished=done>=def.days;
-  el.innerHTML=`<h4 style="font-family:Comfortaa,cursive;color:var(--pink-deep);margin-bottom:4px">${def.n}</h4>
+  el.innerHTML=`<h4 style="font-family:Comfortaa,'Nunito',sans-serif;color:var(--pink-deep);margin-bottom:4px">${def.n}</h4>
     <div class="note">День ${dayN} из ${def.days} · чек-инов: ${done} · осталось ${Math.max(0,def.days-done)} 🐾</div>
     <div class="pbar"><div class="pfill" style="width:${pct}%"></div></div>
     <div style="font-size:12px;color:var(--ink-soft);text-align:right">${pct}%</div>
@@ -708,7 +750,8 @@ function calc7700(){
   if(!kg||kg<=0||kg>50){toast('Введи цель от 0,5 до 50 кг 🐾');return;}
   const kcal=Math.round(kg*7700);
   const sh=Math.max(1,Math.round(kcal/550)),bo=Math.max(1,Math.round(kcal/250));
-  $('res7700').innerHTML=`−${String(kg).replace('.',',')} кг ≈ <b>${kcal.toLocaleString('ru-RU')} ккал</b> — это как <b>${sh} ${plural(sh,['шаверма','шавермы','шаверм'])}</b> или <b>${bo} ${plural(bo,['тарелка','тарелки','тарелок'])} борща</b> 🍜<br>
+  const teen=isTeen()?'<div class="licbox" style="margin-top:8px">🌿 Ты до 18 — «скидывать» сейчас не задача: тело растёт и само решает, куда что класть. Цифра ниже — просто математика для любопытных. Про питание — с врачом 🌷</div>':'';
+  $('res7700').innerHTML=teen+`−${String(kg).replace('.',',')} кг ≈ <b>${kcal.toLocaleString('ru-RU')} ккал</b> — это как <b>${sh} ${plural(sh,['шаверма','шавермы','шаверм'])}</b> или <b>${bo} ${plural(bo,['тарелка','тарелки','тарелок'])} борща</b> 🍜<br>
     <span style="font-size:12px">Мур: это не про запреты, а про наглядность. Маленький дефицит + прогулки = мягкий путь 💗</span>`;
 }
 
@@ -726,7 +769,7 @@ function modal(html){
 function closeModal(){$('modal-root').innerHTML='';}
 function medalModal(title,text){
   modal(`<div style="text-align:center">
-    <svg style="width:110px;height:110px;filter:drop-shadow(0 8px 18px rgba(201,146,46,.5))"><use href="#medal"/></svg>
+    <img src="sprites/kw-rainbow.png" alt="" style="width:120px;filter:drop-shadow(0 8px 18px rgba(201,146,46,.5))" onerror="this.style.display='none'">
     <div class="mhead" style="margin-top:10px">${title}</div>
     <p class="note">${text}</p>
     <button class="pillow gold wide" onclick="closeModal()">Мур-р! 💗</button></div>`);
@@ -760,9 +803,10 @@ function openSettings(){
     <label class="lbl">Первый день последних месячных</label>
     <input id="pfPeriod" class="inp" type="date" value="${data.lastPeriod}">
     <div class="kcrow">
-      <div><label class="lbl">Возраст</label><input id="pfAge" class="inp" type="number" inputmode="numeric" placeholder="лет" value="${esc(String(data.calc.age||''))}"></div>
+      <div><label class="lbl">Возраст (13–17 — мягкий режим)</label><input id="pfAge" class="inp" type="number" inputmode="numeric" min="10" max="99" placeholder="лет" value="${esc(String(data.age||data.calc.age||''))}"></div>
       <div><label class="lbl">Рост, см</label><input id="pfH" class="inp" type="number" inputmode="numeric" placeholder="см" value="${esc(String(data.calc.height||''))}"></div>
     </div>
+    <div id="pfTeenNote" class="licbox" style="display:none"></div>
     <label class="lbl">Активность (для калькулятора калорий)</label>
     <select id="pfAct" class="inp">
       <option value="1.2"${data.calc.act==1.2?' selected':''}>низкая — сидячая жизнь</option>
@@ -794,6 +838,7 @@ function openSettings(){
     <div id="pfHarmBox"></div>
     <label class="lbl">Полезные любимчики (до 6) — предлагаются как замены</label>
     <div id="pfGoodBox"></div>
+    <button class="pillow small ghost wide" style="margin-top:10px" onclick="openInstall()">Установить на телефон 📲</button>
     <button class="pillow small ghost wide" style="margin-top:10px" onclick="testPush()">Проверить уведомления 🔔</button>
     <div class="smallnote">Пока страница открыта — напомним в назначенное время, если дневник ещё пуст. В мобильном приложении будут настоящие push, даже когда всё закрыто.</div>
     <button class="pillow wide" style="margin-top:16px" onclick="saveProfile()">Сохранить 🐾</button>
@@ -806,6 +851,10 @@ function openSettings(){
   renderBodyChips('pfBodyBox',window._bodySel);
   renderHabitChips('pfHabBox');
   renderPortLists();
+  const ageIn=$('pfAge'),tnt=$('pfTeenNote');
+  if(ageIn&&tnt){const upd=()=>{const a=parseInt(ageIn.value,10);
+    tnt.textContent=TEEN_NOTE;tnt.style.display=(a>=13&&a<=17)?'block':'none';};
+    ageIn.addEventListener('input',upd);upd();}
 }
 function saveProfile(){
   data.name=$('pfName').value.trim()||'лапочка';
@@ -823,6 +872,7 @@ function saveProfile(){
   const p=$('pfPeriod').value;
   if(p&&diffDays(p,today())>=0)data.lastPeriod=p;
   data.calc={age:$('pfAge').value.trim(),height:$('pfH').value.trim(),act:parseFloat($('pfAct').value)||1.375};
+  data.age=parseInt($('pfAge').value,10)||0;
   const gs=parseInt($('pfSteps').value,10);
   if(gs>=1000&&gs<=30000)data.goalSteps=gs;
   const gw=parseInt($('pfWater').value,10);
@@ -939,6 +989,9 @@ function openOnboarding(){
     <p class="note">Данные живут только на твоём телефоне. Никаких почт и паролей — только ты и котик 💗</p>
     <label class="lbl">Как тебя звать? (можно псевдоним)</label>
     <input id="obName" class="inp" placeholder="лапочка" value="${esc(data.name)}">
+    <label class="lbl">Сколько тебе лет? — включит самый мягкий режим</label>
+    <div id="obAgeBox" class="zgrid"></div>
+    <div id="obTeenNote" class="licbox" style="display:none"></div>
     <label class="lbl">Твой знак зодиака (для ежедневного гороскопа)</label>
     <div id="zodBox"></div>
     <label class="lbl">Любимый цвет — красит всё приложение</label>
@@ -951,11 +1004,23 @@ function openOnboarding(){
     <input id="obGoal" class="inp" type="number" step="0.1" inputmode="decimal" placeholder="например, 58" value="${data.goal}">
     <button class="pillow wide" style="margin-top:16px" onclick="obStep2()">Дальше — пищевой портрет 🍽</button>
     <button class="skip" onclick="saveOnboarding(true)">Позже</button>`);
+  window._obAge=data.age||0;
+  renderAgeChips('obAgeBox');
   renderZodChips('zodBox',window._zodSel);
   renderSwatches('colBox',window._colSel);
 }
+function renderAgeChips(id){
+  const box=$(id);if(!box)return;
+  box.innerHTML=[13,14,15,16,17,18].map(a=>
+    `<span class="agechip ${window._obAge===a?'sel':''}" onclick="pickAge(${a},'${id}')">${a===18?'18+':a}</span>`).join('');
+  const note=$('obTeenNote');
+  if(note){const teen=window._obAge>=13&&window._obAge<=17;
+    note.textContent=TEEN_NOTE;note.style.display=teen?'block':'none';}
+}
+function pickAge(v,id){window._obAge=v;renderAgeChips(id);}
 function obStep1(){
   data.name=$('obName').value.trim()||'лапочка';
+  data.age=window._obAge||data.age||0;
   data.zodiac=window._zodSel||'';
   if(data.zodiac==='custom'){const c=$('zodBoxCustom');data.zcustom=(c&&c.value.trim())||'Свой знак';}
   data.favColor=window._colSel||'#FF8FBF';
@@ -1004,14 +1069,18 @@ function renderHome(){
   const cb=$('cycleBody'),ph=phaseInfo();
   if(ph){
     const cd=cycleDay();
+    const umb=(ph.t.indexOf('зона воды')>=0||ph.t==='Овуляция')?'<img class="spimg" src="sprites/kw-umbrella.png" alt="" onerror="this.style.display=\'none\'"> ':'';
     cb.innerHTML=`<h3>💗 Цикл и настроение веса</h3>
       <div style="font-size:15px;font-weight:800;margin:4px 0">${ph.e} ${ph.t} · день цикла ${cd}</div>
-      <p class="hand" style="margin-top:2px">${ph.m}</p>`;
+      <p class="hand" style="margin-top:2px">${umb}${ph.m}</p>
+      ${isTeen()?'<div class="smallnote" style="margin-top:6px">🌿 В первые годы цикл бывает нерегулярным — это норма. Приложение лишь подсказывает, не диагностирует 🌷</div>':''}`;
   }else{
     cb.innerHTML=`<h3>💗 Цикл и настроение веса</h3>
       <p class="note">Заполни дату цикла в профиле — и я начну подсказывать, когда вес «прыгает» из-за воды, а не из-за еды 💗</p>
       <button class="pillow small" onclick="openOnboarding()">Заполнить профиль 🐾</button>`;
   }
+  const n7=$('note7700');
+  if(n7)n7.textContent=isTeen()?'Тебе меньше 18 — дефициты не нужны: организм ещё растёт. Здесь только наглядность «с чем это сравнимо», а решения о весе — вместе с врачом и родителями 🌷':'1 кг жира ≈ 7700 ккал. Переведём твою цель в еду — просто для наглядности, без запретов 🐾';
   $('wchart').innerHTML=chartSVG();
   weightComment();
   renderSteps();
@@ -1065,6 +1134,8 @@ const COMPL_VISIT=['ты выглядишь лучше, чем на фото в 
 const COMPL_DAILY=['сегодня достаточно быть, а не успевать','твоё тело работает на тебя круглосуточно — скажи ему спасибо','маленькие шаги сегодня — большой хвост завтра','ты не обязана быть идеальной — только настоящей','сегодня лучший день, чтобы быть себе подругой','даже леопарды отдыхают на ветках — отдыхай без вины','твоя сила — в постоянстве, а не в рывках','сравнивай себя только с собой вчерашней','красота — это как ты себя чувствуешь, а не цифра на весах','сегодня выбирай еду, которая говорит тебе «мур»','твоя нежность к себе — часть тренировки, самая важная','пусть сегодня всё идёт мягко и мур-мур','ты заслуживаешь добрых слов — вот, держи ещё одно','золотая блёстка дня уже нашла тебя — просто ещё не видна','каждый твой чек-ин — кирпичик в крепость спокойствия'];
 const COMPL_STREAK=['{n}, это уже {s} дней подряд — так держать, чемпионка мур-лиги 🏅','{s} дней без пропусков! Котик вешает на твою лапку золотую медальку 🐾','серия {s}! Ты стабильнее швейцарских часов в пушистом исполнении 💗'];
 const COMPL_PLATEAU=['вес стоит на месте? Отлично: значит, ты уже не набираешь. Плато — это привал, а не тупик 🐾','стрелка замерла, а ты — нет: сон, силы и привычки продолжают улучшаться. Мур 💗'];
+const COMPL_VISIT_TEEN=['ты справляешься с самым сложным на свете — быть подростком — и ещё находишь время на шаги','школа, уроки, жизнь — и ты всё ещё тут, следишь за собой. Уважение, мур-р 🐾','ты ярче любого теста по математике, честно','с тобой даже контрольные не так страшны — держись, лапка рядом','ты не обязана быть идеальной ни в весе, ни в оценках — только собой','такие, как ты, потом становятся теми, на кого хотят быть похожими','твой внутренний леопардёнок сегодня в отличной форме','ты умеешь просить помощь — это суперсила, а не слабость 💗'];
+const COMPL_DAILY_TEEN=['сегодня достаточно просто учиться и быть — остальное приложится','твое тело растёт, меняется и работает на тебя — скажи ему спасибо и не ругай','сравнивай себя только с собой вчерашней — остальные сравнивают себя с фильтрами','перекус после школы — это не срыв, это обед второго дня 🐾','сон до полуночи — враг настроения: сегодня попробуй лечь чуть раньше','сегодня лучший день, чтобы быть себе подругой — особенно перед одноклассниками','даже леопарды отдыхают на ветках — отдых без вины тоже важен','твоя сила — в постоянстве: 10 минут прогулки сегодня = победа','красота — это как ты себя чувствуешь, а не лайки и не цифра на весах','выбери еду, которая говорит тебе «мур», — и не слушай никого про «надо»'];
 function plateauNow(){
   const pts=data.weights.slice(-5);
   if(pts.length<5)return false;
@@ -1076,12 +1147,15 @@ function visitCompliment(pause){
   const st=stepsStreak();
   if(st>=7)return COMPL_STREAK[hash(today()+'st')%COMPL_STREAK.length].replace('{n}',uname()).replace('{s}',st);
   if(plateauNow())return COMPL_PLATEAU[hash(today()+'pl')%COMPL_PLATEAU.length];
-  return COMPL_VISIT[Math.floor(Math.random()*COMPL_VISIT.length)].replace('{n}',uname());
+  const pool=isTeen()?COMPL_VISIT_TEEN:COMPL_VISIT;
+  return pool[Math.floor(Math.random()*pool.length)].replace('{n}',uname());
 }
 function renderMagic(){
   const el=$('magicCard');if(!el)return;
-  const c=COMPL_DAILY[hash(today()+'day')%COMPL_DAILY.length];
+  const dpool=isTeen()?COMPL_DAILY_TEEN:COMPL_DAILY;
+  const c=dpool[hash(today()+'day')%dpool.length];
   const h=horoscopeOfDay();
+  const sun=`<img class="spimg" src="sprites/kw-sun.png" alt="" onerror="this.style.display='none'">`;
   const horo=h?`<div class="horoc">
       <div style="font-weight:800;font-size:13px;color:#B05577">${h.z.e} Гороскоп · ${esc(h.z.n)}</div>
       <div class="hm">«${h.mood}»</div>
@@ -1090,7 +1164,7 @@ function renderMagic(){
     </div>`
     :`<p class="note">Выбери знак зодиака в профиле — и каждый день здесь будет гороскоп с микро-делом дня ✨</p>
       <button class="pillow small" onclick="openSettings()">Выбрать знак 🐾</button>`;
-  el.innerHTML=`<h3>✨ Магия дня</h3>
+  el.innerHTML=`<h3>✨ Магия дня ${sun}</h3>
     <p class="hand" style="margin:2px 0 10px">💗 ${c}</p>${horo}`;
 }
 
@@ -1174,7 +1248,8 @@ function renderForecast(){
   if(!pts.length){el.innerHTML='Сначала запиши вес на главном экране — и здесь появится прогноз 🐾';return;}
   const cur=pts[pts.length-1].w;
   const f=n=>String((cur-pace*n).toFixed(1)).replace('.',',');
-  el.innerHTML=`Сейчас <b>${String(cur).replace('.',',')} кг</b>. При темпе <b>−${String(pace).replace('.',',')} кг/нед</b>: через 4 недели ≈ <b>${f(4)} кг</b>, через 8 ≈ <b>${f(8)} кг</b>, через 12 ≈ <b>${f(12)} кг</b>.<br>
+  const teenN=isTeen()?'<div class="licbox" style="margin-top:8px">🌿 Тебе меньше 18: это просто математика «что если». Организм ещё растёт — вес сам найдёт своё правильное место. Задача сейчас — привычки, а не цифры 🌷</div>':'';
+  el.innerHTML=teenN+`Сейчас <b>${String(cur).replace('.',',')} кг</b>. При темпе <b>−${String(pace).replace('.',',')} кг/нед</b>: через 4 недели ≈ <b>${f(4)} кг</b>, через 8 ≈ <b>${f(8)} кг</b>, через 12 ≈ <b>${f(12)} кг</b>.<br>
   <span style="font-size:11.5px;color:var(--ink-soft)">Это математика формулы 7700. В жизни вес идёт лесенкой: вода и цикл рисуют свои зигзаги — ориентируйся на тренд, а не на день 🐾</span>`;
 }
 function calcKcal(){
@@ -1191,6 +1266,7 @@ function calcKcal(){
     Для удержания веса: ≈ ${tdee.toLocaleString('ru-RU')} ккал/день<br>
     Цель при темпе −${String(pace).replace('.',',')} кг/нед: <b style="color:var(--pink-deep)">≈ ${target.toLocaleString('ru-RU')} ккал/день</b>
     ${target<1200?'<div class="licbox">⚠️ Ниже 1200 ккал самостоятельно опускаться нельзя — это территория врача. Выбери темп поменьше, мур.</div>':''}
+    ${age<18?'<div class="licbox">🌿 Тебе меньше 18: дефицит калорий в этом возрасте не рекомендуется — организм растёт. Цифры выше показаны для понимания, питание — только по согласованию с врачом 🌷</div>':''}
     <div style="font-size:11.5px;color:var(--ink-soft);margin-top:6px">Формула Миффлина—Сан Жеора, погрешность ±10%. Ориентир, а не медицинская рекомендация 🐾</div>`;
 }
 const TIPS=[
@@ -1298,7 +1374,7 @@ function renderStats(){
     <h3>🧮 Калькулятор калорий</h3>
     <p class="note">Научная оценка потребности — формула Миффлина—Сан Жеора (для девушек). Вес подтянется из дневника, заполни остальное.</p>
     <div class="kcrow">
-      <div><label class="lbl">Возраст</label><input id="kcAge" class="inp" type="number" inputmode="numeric" placeholder="лет" value="${esc(String(data.calc.age||''))}"></div>
+      <div><label class="lbl">Возраст</label><input id="kcAge" class="inp" type="number" inputmode="numeric" placeholder="лет" value="${esc(String(data.age||data.calc.age||''))}"></div>
       <div><label class="lbl">Рост, см</label><input id="kcH" class="inp" type="number" inputmode="numeric" placeholder="см" value="${esc(String(data.calc.height||''))}"></div>
     </div>
     <div class="wrow"><input id="kcW" class="inp" type="number" step="0.1" inputmode="decimal" placeholder="Вес, кг" value="${cur!==null?cur:''}"></div>
@@ -1364,7 +1440,7 @@ function renderWater(){
   const t=today(),n=data.water[t]||0,g=data.goalWater;
   const wKeys=Object.keys(data.water).filter(d=>{const dd=diffDays(d,t);return dd>=0&&dd<7;});
   const wAvg=wKeys.length?(wKeys.reduce((a,k)=>a+data.water[k],0)/wKeys.length).toFixed(1).replace('.',','):null;
-  el.innerHTML=`<h3>💧 Вода</h3>
+  el.innerHTML=`<h3>💧 Вода <img class="spimg" src="sprites/kw-balloon.png" alt="" onerror="this.style.display='none'"></h3>
     <div class="bigsteps" style="font-size:24px">${n} <span style="font-size:13px;color:var(--ink-soft)">/ ${g} стаканов</span></div>
     <div style="font-size:17px;margin:6px 0;letter-spacing:2px">${'🥛'.repeat(Math.min(n,10))||'—'}</div>
     <div class="wrow"><button class="pillow small" onclick="addWater(1)">+ стакан</button><button class="pillow small ghost" onclick="addWater(-1)">−</button></div>
@@ -1372,7 +1448,7 @@ function renderWater(){
 }
 function addWater(d){
   const t=today();data.water[t]=Math.max(0,(data.water[t]||0)+d);save();renderWater();
-  if(d>0&&data.water[t]===data.goalWater){toast('Цель по воде на сегодня выполнена! 💧🐾');pawConfetti();}
+  if(d>0&&data.water[t]===data.goalWater){toast('Цель по воде на сегодня выполнена! 💧🐾');puffBoom();pawConfetti();}
   else if(d>0)toast('Стаканчик засчитан 💧');
 }
 /* --- «Я хочу съесть» --- */
@@ -1432,7 +1508,7 @@ function renderCraving(){
   const t=today(),c7=data.cravings.filter(c=>{const dd=diffDays(c.d,t);return dd>=0&&dd<7;});
   const s7=c7.reduce((a,c)=>a+(c.saved||0),0);
   const mine=(data.harmTop||[]).length;
-  el.innerHTML=`<h3>🍩 Хочу съесть…</h3>
+  el.innerHTML=`<h3>🍩 Хочу съесть… <img class="spimg" src="sprites/kw-cake.png" alt="" onerror="this.style.display='none'"></h3>
     <p class="note">Сказать желанию «нельзя» — худший план. Выбери честно: замену, половинку или «осознанно да» — котик посчитает пользу и даст лапки 🐾</p>
     <div class="chip">🐾 Лапки мудрости: ${p}</div>${s7>0?`<div class="chip">сохранено за неделю: ≈ ${s7.toLocaleString('ru-RU')} ккал</div>`:''}
     ${mine?`<div class="chip">твоих желаний в списке: ${mine}</div>`:''}
@@ -1512,13 +1588,27 @@ function cravingChoice(kind,i){
   else if(paws>0)toast('+1 лапка за хитрость с водой 🐾');
   else toast(ai);
   const hit=[5,15,30,50].find(m=>prevPaws<m&&data.paws>=m);
-  if(hit){pawConfetti();medalModal('Лапки мудрости! 🐾',`У тебя уже ${data.paws} лапок за правильные выборы. Так держать, мудрая леопард-лапка 💗`);}
+  if(hit){puffBoom();pawConfetti();medalModal('Лапки мудрости! 🐾',`У тебя уже ${data.paws} лапок за правильные выборы. Так держать, мудрая леопард-лапка 💗`);}
 }
 /* --- Твой мягкий план --- */
 function renderPlan(){
   const el=$('planCard');if(!el)return;
   const pts=data.weights,cur=pts.length?pts[pts.length-1].w:null;
   const pace=parseFloat(data.pace)||0.5;
+  if(isTeen()){
+    const age=parseInt(data.age,10);
+    let kcal='';
+    const h=parseFloat(data.calc.height);
+    if(age&&h&&cur){
+      const bmr=Math.round(10*cur+6.25*h-5*age-161),tdee=Math.round(bmr*(data.calc.act||1.375));
+      kcal=`Твой расход ≈ <b>${tdee.toLocaleString('ru-RU')} ккал</b>/день — ешь примерно столько же, без дефицита: организму в рост нужно всё своё 🌷 `;
+    }
+    el.innerHTML=`<h3>🗺 Твой мягкий план</h3>
+      <div class="licbox">🌿 Подростковый режим (13–17): без дефицитов и темпов «минус кг/нед». Твой план — это привычки: шаги, вода, сон и дневник. Взвешивать и сравнивать можно, гоняться за цифрой — незачем. Серьёзные изменения веса — с врачом 🌷</div>
+      <p class="note">${kcal}Шаги: <b>${data.goalSteps.toLocaleString('ru-RU')}</b>/день · Вода: <b>${data.goalWater}</b> стаканов · Сон: <b>${data.goalSleep} ч</b> · Дневник — 10 секунд.</p>
+      <p class="note">Правило тренда: смотри на вес раз в неделю и не в «зоне воды». Цифры — информацией бывают, а ты — просто ты 🐾</p>`;
+    return;
+  }
   if(cur===null){
     el.innerHTML=`<h3>🗺 Твой мягкий план</h3>
       <p class="note">Запиши вес и цель в профиле — и котик соберёт личный путь: калории, шаги, вода и сон 🐾</p>`;
@@ -1593,6 +1683,23 @@ function pedStop(count){
   if(count&&n>0){const t=today();data.steps[t]=(data.steps[t]||0)+n;save();renderHome();toast(`+${n} шагов от датчика 🐾`);}
 }
 /* --- Напоминания --- */
+let deferredPrompt=null;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;});
+function openInstall(){
+  const btn=deferredPrompt?`<button class="pillow wide" onclick="doInstall()">Установить сейчас — одно касание 🐾</button>`
+    :`<div class="smallnote" style="text-align:center">Кнопка «Установить» появится, когда откроешь приложение в браузере телефона (Chrome на Android поддерживает установку сразу).</div>`;
+  modal(`<div class="mhead">Как установить Kate Leopard 📲</div>
+    <p class="note">Приложение ставится прямо из браузера — без магазинов и регистраций. Появится иконка леопардёнка на главном экране, работать будет даже без интернета 💗</p>
+    <div class="licbox"><b>🤖 Android (Chrome)</b><br>1. Открой этот сайт в Chrome<br>2. Меню ⋮ → «Установить приложение»<br>3. Иконка появится на главном экране</div>
+    <div class="licbox" style="margin-top:8px"><b>🍏 iPhone / iPad (Safari)</b><br>1. Открой этот сайт в Safari<br>2. Кнопка «Поделиться» (квадрат со стрелкой)<br>3. «На экран „Домой“» → «Добавить»</div>
+    ${btn}
+    <button class="skip" onclick="closeModal()">Понятно 🐾</button>`);
+}
+function doInstall(){
+  if(!deferredPrompt){toast('Установка доступна из браузера телефона 🐾');return;}
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(()=>{deferredPrompt=null;closeModal();});
+}
 function testPush(){
   if(!('Notification' in window)){toast('Этот браузер не умеет уведомления — в мобильном приложении будут настоящие пуши 🐾');return;}
   Notification.requestPermission().then(p=>{
